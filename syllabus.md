@@ -40,8 +40,8 @@ To do this well, researchers as data scientists need to be skilled with internet
     + clustering and trees, building networks
     + [network](analyze/network/README.md) observations in connected graphs
 - [profile](profile/README.md) code for efficiency and error checking
-    + use code profiling tools to identify bottlenecks and logic errors
-    + use simulation to study statistical properties
+    + [profile](profile/profile.md) code to identify bottlenecks and logic errors
+    + [simulate](profile/simulate.Rmd) data to study statistical properties
     + create graphics to diagnose patterns in raw and derived data
 - [connect](connect/README.md) with other data science tools beyond R
     + use unix/linux shell to search and modify project
