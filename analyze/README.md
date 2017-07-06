@@ -9,8 +9,8 @@ do first steps to analyze data in `R`.
 
 file | contents
 ---- | --------
-[correlate](correlate.Rmd) | corelate variables (columns) of data
-[covary](covary.Rmd) | how do columns vary together
+[correlate](correlate.Rmd) | co-relate variables (columns) of data
+[covary](covary.Rmd) | how do columns co-vary together
 [network](network/README.md) | network observations in connected graphs
 
 Douglas Bates

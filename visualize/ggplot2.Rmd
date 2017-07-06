@@ -57,7 +57,7 @@ knitr::opts_chunk$set(echo = TRUE)
 - [ggalt](https://github.com/hrbrmstr/ggalt)
 - [ggtree](https://guangchuangyu.github.io/ggtree/) | [ggdendro](https://cran.r-project.org/web/packages/ggdendro/vignettes/ggdendro.html)
 - [ggExtra](https://github.com/daattali/ggExtra)
-- [VcfR](https://cran.r-project.org/web/packages/vcfR/vignettes/intro_to_vcfR.html)
+- [vcfR](https://cran.r-project.org/web/packages/vcfR/vignettes/intro_to_vcfR.html)
 
 ## Heatmaps
 
