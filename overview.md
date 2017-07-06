@@ -11,8 +11,14 @@ It draws on material from [Data Carpentry](http://datacarpentry.org) and courses
 The intent is that this material could serve as the basis for a self-directed learning process. The material is all on GitHub at <https://github.com/ComBEE-UW-Madison/RStudyGroup> as part of the [ComBEE R Study Group at University of Wisconsin-Madison](https://sites.google.com/a/wisc.edu/combee/r-study-group).
 This set of material is being prepared by [Brian Yandell](http://www.stat.wisc.edu/~yandell) to be used for Fall 2017. It is built in part on the [Professional Skills for Data Science (Stat 627)](https://github.com/datascience-uwmadison/stat627) course taught by Yandell and [Douglas Bates](https://github.com/dmbates/stat692) in Fall 2014 and 2015, and on material developed by ComBEE members over the past few years.
 
-- [Stat 627 Syllabus](https://github.com/datascience-uwmadison/stat627/blob/master/syllabus.md)
-- [Stat 627 Weekly Schedule Fall 2015](https://github.com/datascience-uwmadison/stat627/blob/master/weekly.md)
+Chester Ismay offered these guiding principles at rstudio2017::conf
+
+- Blur lines between lecture & lab
+- Focus on the data/science research pipeline
+- It's all about the data
+- Use simulation/resampling not probability/large sample approximation
+- Don’t fence off students from the computation pool, throw them in!
+- Complete reproducibility with [bookdown](https://bookdown.org/)
 
 ## Setup
 

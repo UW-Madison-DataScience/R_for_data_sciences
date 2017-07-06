@@ -9,7 +9,9 @@ curate data in `R`.
 file | contents
 ---- | --------
 [data](data.Rmd) | Working with Data in R
-[apply](apply.Rmd) | examples using `for` and `apply`
+[applyExample](applyExample.Rmd) | examples using `for` and `apply`
 [intro_dplyr](intro_dplyr.Rmd) | sub_lesson recasting data.frame examples
+[string](string.Rmd) | characters and strings
 [function](function.Rmd) | examples of functions
 [regex](regex.Rmd) | regular expressions
+[file](file.Rmd) | read and write files

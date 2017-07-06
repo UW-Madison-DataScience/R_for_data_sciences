@@ -8,11 +8,15 @@
 
 - [Introduction to R for Python Users by Ramnath Vaidyanathan](https://ramnathv.github.io/pycon2014-r/)
 - [Advanced R by Hadley Wickham (ebook)](http://adv-r.had.co.nz/)
-- [Using R and RStudio at Amherst College](https://www.amherst.edu/people/facstaff/nhorton/node/567498)
+- [Using R and RStudio at Amherst College](https://www.amherst.edu/people/facstaff/nhorton/node/567498) ([Book](https://nhorton.people.amherst.edu/r2/index.php))
 - [RStudio Webinars](https://www.rstudio.com/resources/webinars/)
     + [Webinar GitHub](https://github.com/rstudio/webinars)
     + [rstudio::2017 Slides](https://github.com/kbroman/RStudioConf2017Slides/blob/master/ReadMe.md) | [rstudio::2017 Videos](https://www.rstudio.com/resources/webinars/#rstudioconf)
+- <https://www.rdocumentation.org/>
+- <https://open.nasa.gov/explore/>
+- [Modern Dive by Chester Ismay and Albert Y. Kim](https://ismayc.github.io/moderndiver-book/)
 
 - [Yandell Data Club](https://github.com/byandell/data_club)
 - [Profession Skills for Data Science](http://www.stat.wisc.edu/network-skills)
-- [Yandell Fall 2015 Moodle](https://ay15-16.moodle.wisc.edu/prod/course/view.php?id=280);
+- Yandell Fall 2015 Stat 627 [Moodle](https://ay15-16.moodle.wisc.edu/prod/course/view.php?id=280) | [Syllabus](https://github.com/datascience-uwmadison/stat627/blob/master/syllabus.md) | [Weekly Schedule](https://github.com/datascience-uwmadison/stat627/blob/master/weekly.md)
+

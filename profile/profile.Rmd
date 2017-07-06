@@ -1,0 +1,27 @@
+---
+title: "profile"
+author: "Brian S. Yandell"
+date: "7/6/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Diagnostics and testing
+
+- where are bottlenecks: `system.time()` and `Rprof()`
+- what is broken: `traceback()` and `debug()`
+- does it do what I want:
+    + informal unit testing of small pieces of code
+    + using [testthat](https://github.com/hadley/testthat) package
+    
+Several issues of code efficiency come up:
+
+- cautions on using `for` and `while` loops (see [data lesson](../curate/data.Rmd))
+- comparing floating point numbers: `all.equal()` and `1L`
+- R profiling of code with Rprof() (before optimizing)
+
+[Travis Continuous Integration](https://travis-ci.org/) works with packages on github to make sure code works as expected each time it is changed. For `R`, this is often used in conjunction with [testthat](https://github.com/hadley/testthat). However, Travis/CI works for a wide range of software languages and platforms.
+

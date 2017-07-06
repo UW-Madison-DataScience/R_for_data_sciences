@@ -9,6 +9,21 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+- Write your own R functions by Jenny Bryan:
+    + [part 1: bare bone basics](http://stat545.com/block011_write-your-own-function-01.html)
+    + [part 2: generalize for multiple uses](http://stat545.com/block011_write-your-own-function-02.html)
+    + [part 3: missing values (`NA`) and pass through (`...`)](http://stat545.com/block011_write-your-own-function-03.html)
+- [linear regression function in detail](http://stat545.com/block012_function-regress-lifeexp-on-year.html)
+- [split-apply-combine the function to all countries](http://stat545.com/block013_plyr-ddply.html#recall-the-function-we-wrote-to-fit-a-linear-model)
+
+miscellaneous notes:
+
+- functional programming (prequel to functions)
+- anonymous function, function closure
+- `stopifnot()` and `if() {stop()}`
+- turning interactive code into a function
+- `return()` values and `invisible()`
+
 A simple function has a name, possibly one or more arguments, and a body.
 
 ```{r}
@@ -27,9 +42,13 @@ calcGCPct(mySeq[1:100])
 Notes about arguments
 
 - order: full names, abbreviated names, order
-- assignment: = v. <-
+- assignment: `=` vs. `<-`
 - elipsis (`...`) for arbitrary additional arguments
 - defaults
+- use arguments to avoid cut and paste
+- sensible conventions for argument names
+    + mean something to you
+    + match use in functions you call
 
 ```{r}
 makeVector <- function(aa, ab, ba) { c(aa, ab, ba) }

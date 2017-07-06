@@ -1,0 +1,18 @@
+---
+title: "Reading and Writing Files"
+author: "Brian S. Yandell"
+date: "7/6/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+- Jenny Bryan's stat 545:
+    + [getting data in and out of `R`](http://stat545.com/block026_file-out-in.html)
+    + [writing figures to file with `ggsave`](http://stat545.com/hw05_factor-figure-boss-repo-hygiene.html#writing-figures-to-file)
+- `read.csv` and `readr::read_csv`
+- `write.csv` and `readr::write_csv`
+- `readxl::read_excel`
+- `readRDS` and `saveRDS`

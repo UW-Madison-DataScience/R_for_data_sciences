@@ -12,3 +12,8 @@ file | contents
 [correlate](correlate.Rmd) | corelate variables (columns) of data
 [covary](covary.Rmd) | how do columns vary together
 [network](network/README.md) | network observations in connected graphs
+
+Douglas Bates
+
+- [Formulas.Rmd](https://github.com/dmbates/stat692/blob/master/Formulas.Rmd)
+- [formulas.Rnw](https://github.com/dmbates/stat692/blob/master/formulas.Rnw) and [formulas.pdf]https://github.com/dmbates/stat692/blob/master/formulas.pdf

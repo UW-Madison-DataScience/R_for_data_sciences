@@ -17,3 +17,6 @@ profile code to do the following:
 - [Speed of simulations](https://github.com/dmbates/stat692/blob/master/SimSpeed.Rmd)
 - [Simulating linear model fits](https://github.com/dmbates/stat692/blob/master/LmSimulation.Rmd)
 
+["Consistency is the last refuge of the unimaginative." Oscar Wilde](http://www.quotationspage.com/quote/23578.html)
+
+

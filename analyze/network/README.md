@@ -8,7 +8,7 @@ base name | details
 [network2_igraph](network2_igraph.Rmd) | igraph example with dataset 2
 [network_visNetwork](network_visNetwork.Rmd) | visNetwork example with dataset 1
 
-The `network_data.Rmd` file will download the ZIP file, data files, and Katya Ognyanova's tutorial as PDF and R. See **Network Visualization with R**, [Polnet 2016](http://www.kateto.net/polnet2016) by Katya Ognyanova. Katya discusses other packages as well as igraph and visNetwork.
+The `network_data.Rmd` file will download the ZIP file, data files, and Katya Ognyanova's tutorial as PDF and R. See **Network Visualization with R**, [Polnet 2016](http://www.kateto.net/polnet2016) by [Katya Ognyanova](http://kateto.net/network-visualization). Katya discusses other packages as well as igraph and visNetwork.
 
 Files from Katya:
 

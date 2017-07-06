@@ -4,7 +4,7 @@ organize data in a variety of ways.
 - document ongoing work with [R Markdown](http://rmarkdown.rstudio.com/)
 - use [git and github](http://happygitwithr.com/) to keep track of code and document changes with version control
 - organize functions, documentation and data into packages (`R` libraries) to share
-- create and manage external databases from `R` objects
+- create and manage external [database](database.Rmd) with `R` objects
     + see [databases](https://db.rstudio.com/)
     + understand use and limitations of CSV and XLS file formats
     + understand and use SQLite in `R`; learn about DBI, dbplyr
@@ -12,9 +12,10 @@ organize data in a variety of ways.
     
 file | contents
 ---- | --------
-Rmarkdown | Rmarkdown Report Writing
-RmarkdownExample | Rmarkdown Example
-github | GitHub Version Control
-SQLiteDplyr | lesson using dplyr with SQLite
+[Rmarkdown](Rmarkdown.Rmd) | Rmarkdown Report Writing
+[RmarkdownExample](RmarkdownExample.Rmd) | Rmarkdown Example
+[github](github.Rmd) | GitHub Version Control
+[database](database.Rmd) | create and manage external databases
+[SQLiteDplyr](SQLiteDplyr.Rmd) | lesson using dplyr with SQLite
 
     
