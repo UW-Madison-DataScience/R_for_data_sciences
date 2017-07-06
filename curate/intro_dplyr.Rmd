@@ -1,0 +1,227 @@
+---
+title: "Intro to R Adapted to dplyr"
+author: "Data Carpentry contributors"
+minutes: 45
+output:
+  html_document: default
+  pdf_document: default
+layout: topic
+---
+
+```{r knitr_options, echo=FALSE}
+```
+
+------------
+
+Modern data analysis with R and Rstudio tends to use a growing set of tools developed by Hadley Wickham and the Rstudio crew. This so-called [Hadleyverse](http://blog.revolutionanalytics.com/2015/03/hadleyverse.html) reimagines many of the basic concepts, nouns and verbs of R. Fundamental to this is `dplyr`. This companion to the [Aggregating and analyzing data with dplyr](http://kbroman.org/datacarpentry_R_2016-06-01/03-dplyr.html) lesson looks at some of the concepts from the [Data and data frames](http://kbroman.org/datacarpentry_R_2016-06-01/02-data-frames.html) lesson using `dplyr`.
+
+## Learning Objectives
+
+* examine difference between a data frame and a tibble
+* use `dplyr` package to explore the structure and content of a tibble
+* know how to access any element of a `data.frame`
+
+## Setup
+
+We are going to use the `readr` and `dplyr` packages.
+If you do not have them, please use `install.packages` to install.
+
+```
+install.packages(readr,dplyr)
+```
+
+Now attach these packages as libraries for use.
+
+```{r}
+library(readr)
+```
+
+```{r}
+library(dplyr)
+```
+
+
+------------
+
+## Survey Data
+
+We return to the species and weight of animals caught
+in plots in a study area in Arizona over time. The dataset is stored
+as a CSV file: each row holds information for a single animal, and the
+columns represent:
+
+| Column           | Description                        |
+|------------------|------------------------------------|
+| record\_id       | Unique id for the observation      |
+| month            | month of observation               |
+| day              | day of observation                 |
+| year             | year of observation                |
+| plot\_id         | ID of a particular plot            |
+| species\_id      | 2-letter code                      |
+| sex              | sex of animal ("M", "F")           |
+| hindfoot\_length | length of the hindfoot in mm       |
+| weight           | weight of the animal in grams      |
+| genus            | genus of animal                    |
+| species          | species of animal                  |
+| taxa             | e.g. Rodent, Reptile, Bird, Rabbit |
+| plot\_type       | type of plot                       |
+
+The data are available at <http://kbroman.org/datacarp/portal_data_joined.csv>.
+
+We can read that data straight from the web. Here we use `read_csv` from the `readr` package. It is redesigned from `read.csv`. Note that `read_csv` treats blanks "" and "NA" both as missing, for instance.
+
+```{r read_csv_from_web}
+surveys <- read_csv("http://kbroman.org/datacarp/portal_data_joined.csv")
+```
+
+## Data frames and Tibbles
+
+The `readr` and `dplyr` packages use a reimaging of a data.frame to a `tibble`, or augmented table. [There is a `tibble` package, but we won't discuss it.] Tibbles have column names but do not have row names; hence rows and columns are treated somewhat differently, more like for tables in an SQL database, for instance.
+
+Tibbles have many slick features, one being that you don't need to use `head` to see the beginning of the table. All the inspection tools described before still apply, but sometimes there are nicer ways.
+
+```{r}
+surveys
+```
+
+### Challenge
+
+Based on the `tibble` of `surveys`,
+
+* How many rows and columns are in `surveys`?
+* What are the classes of the columns for `sex` and `year`?
+
+## Indexing, Sequences, and Subsetting
+
+We can pull out parts of a data frame using `filter` and `select`.  We need
+to provide two values: filter row and select column.
+
+For example, to get the element in the 1st row, 1st column, we can use the verbs `filter` and `select`, along with `row_number`, to return a 1 by 1 tibble:
+
+```{r one_one_element}
+surveys %>%
+  filter(row_number() == 1) %>%
+  select(1)
+```
+
+Notice that we can `select` a column by its number (or name -- see below), but we `filter` rows by logical expressions, in this case the row number must be 1.
+
+To get the element in the 2nd row, 7th column:
+
+```{r two_seven_element}
+surveys %>%
+  filter(row_number() ==2) %>%
+  select(7)
+```
+
+To select the entire 2nd row:
+
+```{r second_row}
+surveys %>%
+  filter(row_number() ==2)
+```
+
+And to filter to the entire 7th column:
+
+```{r seventh_column}
+surveys %>%
+  select(7)
+```
+
+You can also refer to columns by name, in multiple ways. However, the `class` of the resulting object may differ
+
+```{r grab_sex}
+class(surveys %>% select(sex))
+class(surveys[,"sex"])
+class(surveys$sex)
+class(surveys[["sex"]])
+```
+
+When we select a single column using `dplyr` tools, the result is still a `tibble` (or `tbl_df`); that is, it is a table with one column. When we select a column as if it were a `data.frame`, the result is a character vector. 
+
+### Challenge
+
+How would you get the first element of the `sex` column as a character if you started with a `tibble` representation such as `surveys %>% select(sex)`?
+
+<!-- end challenge -->
+
+<!---
+```{r sex_element}
+## Answers
+##
+sex <- (surveys %>% select(sex))[[1]]
+sex[1]
+## or
+sex <- surveys %>% select(sex)
+sex$sex[1]
+```
+--->
+
+### Slices
+
+To get slices of our tibble, we can include a vector for the row
+or column indexes (or both). Notice the use of `%in%` to filter row numbers in a range.
+
+```{r}
+surveys %>%
+  filter(row_number() %in% 1:3) %>%
+  select(7)  # first three elements in the 7th column
+surveys %>%
+  filter(row_number() == 1) %>%
+  select(1:3)   # first three columns in the first row
+surveys %>%
+  filter(row_number() %in% 2:4) %>%
+  select(6:7) # rows 2-4, columns 6-7
+```
+
+Note again that usually operations on a `tibble` result in a `tibble`, keeping column headers and table structure.
+
+### Challenge
+
+Use `row_number()`, in conjuction with either `seq()` or the modulo (mod) operator `%%`, to create a new `data.frame` called
+`surveys_by_10` that includes every 10th row of the survey data frame
+starting at row 10 (10, 20, 30, ...). 
+
+[Hint for mod: what does `seq(20) %% 5` yield?]
+
+<!-- end challenge -->
+
+<!---
+```{r every_tenth}
+## Answers
+##
+## * Using mod
+surveys_by_10 <- surveys %>% 
+  filter((row_number() %% 10) == 0)
+## * using seq
+surveys_by_10 <- surveys %>% 
+  filter(row_number() %in% seq(10, nrow(surveys), by = 10))
+```
+--->
+
+### More tally stuff
+
+The `dplyr` intro uses `tally` several times. If you look on the help page for `tally` you will find `count`. You will also find reference to `n` and `sum`. Here are several ways to do the same task. Why are there several ways? Who knows? But sometimes you want to do other things in tandem, and one of these might work best.
+
+```{r}
+surveys %>%
+  group_by(sex) %>%
+  tally
+```
+```{r}
+surveys %>%
+  count(sex)
+```
+
+```{r}
+surveys %>%
+  group_by(sex) %>%
+  summarize(count = n())
+```
+
+```{r}
+surveys %>%
+  group_by(sex) %>%
+  summarize(count = sum(!is.na(year)))
+```
+

@@ -1,0 +1,269 @@
+---
+title: "Correlation"
+output:
+  html_document: default
+  html_notebook: default
+---
+
+```{r libraries, message=FALSE}
+library(dplyr)
+library(ggplot2)
+```
+
+This lesson concerns correlation, which measures the relationship between to columns of data.
+
+### Learning Objectives
+
+* explain what correlation measures
+* plot and summarize relationship for pair of measures
+* relate two phenotypes using correlation and regression
+
+### Read data
+
+Here we read in data and reduce to species with counts at least 10.
+
+```{r read}
+surveys <- read.csv("../data/portal_data_joined.csv")
+## Remove missing data.
+surveys_complete <- surveys %>%
+  filter(species_id != "", !is.na(weight)) %>%
+  filter(!is.na(hindfoot_length), sex != "")
+# count records per species
+species_counts <- surveys_complete %>%
+  group_by(species_id) %>%
+  tally
+# get names of the species with counts >= 10
+frequent_species <-  species_counts %>%
+  filter(n >= 10) %>%
+  select(species_id)
+# filter out the less-frequent species
+surveys_complete <- surveys_complete %>%
+  filter(species_id %in% frequent_species$species_id)
+```
+
+Now focus on one species, `Dipodomys spectabilis`. For better visuals, we will jitter the hindfoot length slightly
+
+```{r}
+surveys_dip_spec <- surveys_complete %>%
+  filter(species == "spectabilis") %>%
+  mutate(hindfoot_length = jitter(hindfoot_length))
+```
+
+### Plot two phenotypes
+
+Now we examine the two phenotypes against each other,
+`weight` and `hindfoot_length`.
+
+```{r}
+surveys_plot <- ggplot(surveys_dip_spec, 
+                       aes(x = weight, 
+                           y = hindfoot_length))
+```
+
+We start with a "scatterplot", which basically scatters all the points, defined by rows in our data frame, across a plot.
+
+```{r}
+surveys_plot + 
+  geom_point(alpha = 1, shape = 1)
+```
+
+```{r}
+ggplot(surveys_dip_spec,
+       aes(x = rank(weight),
+           y = rank(hindfoot_length))) +
+  geom_point(alpha = 1, shape = 1, size = 0.75)
+```
+
+#### Five Number Summary
+
+In practice we may have many phenotypes to examine, and it is useful to have summaries of each phenotype as well as a summary of how each pair of phenotypes are related. This makes sense if each trait has a roughly symmetric, bell-shaped density, and the scatterplot of pairs of traits have roughly a football shape.
+
+The single phenotype summaries are means, to measure center of data, and SDs (standard deviations), to measure the spread.
+
+```{r}
+(means <- surveys_dip_spec %>%
+  summarize_at(vars(weight,hindfoot_length), mean))
+```
+
+```{r}
+(SDs <- surveys_dip_spec %>%
+  summarize_at(vars(weight,hindfoot_length), sd))
+```
+
+Pairs of phenotypes are summarized with the correlation coefficient, computed using the `cor()` function. The help page details options of how to `use` missing data, but we will ignore this as we removed missing data already.
+
+```{r}
+with(surveys_dip_spec, cor(weight, hindfoot_length))
+```
+
+#### Add SD line
+
+Correlation measures the spread of data from the SD line, the line through the means that goes up (or down) one SD vertically for each SD along the horizontal axis. The slope of the line is the ratio of SDs, while the intercept at 0 weight is computed as shown below.
+
+
+```{r}
+(slope <- SDs$hindfoot_length / SDs$weight)
+(intercept <- means$hindfoot_length - means$weight * slope)
+```
+
+Here is the SD line plotted over the scatterplot of data. A circle is added at the mean of `weight` and `hindfoot_length`, and a rectangle extends out 2 SDs in each direction. The data points are made a bit smaller and grayer to deempathize them.
+
+```{r}
+surveys_plot +
+  geom_rect(aes(xmin = means$weight - 2 * SDs$weight,
+                xmax = means$weight + 2 * SDs$weight,
+                ymin = means$hindfoot_length - 2 * SDs$hindfoot_length,
+                ymax = means$hindfoot_length + 2 * SDs$hindfoot_length),
+                alpha = 0, col="black") + 
+  geom_point(alpha = 1, size = 0.5, shape = 1, col = "darkgray") +
+  geom_abline(intercept=intercept, slope=slope,
+              col="black", lwd=1) +
+  geom_point(aes(x = means$weight,
+                 y = means$hindfoot_length),
+             size = 4, col = "black", shape = 1)
+```
+
+
+### Interpretation of Correlation Coefficient
+
+These data have a positive correlation (`r round(with(surveys_dip_spec, cor(weight, hindfoot_length)), 2)`). But how do we interpret it?
+Basically, the tighter the data are around the SD line, the higher (in absolute value) is the correlation.
+
+The introductory book [_Statisticss_ by Freedman, Pisani and Purvis]() has a nice intrepretation, which is partially presented at [this website](http://www.analytictech.com/mb313/correlat.htm). 
+
+If your scatterplot (or the rectangle defined by SDs) is roughly square, the correlation is roughly
+
+```
+cor = 1 - width / length
+```
+
+with `length` being the length along the green line`width` being the distance out perpendicular to the green line of the blob of data. That is, the higher the correlation, the closer points are to the SD line.
+If the relationship is decreasing, the correlation is the opposite. 
+
+```
+cor = -(1 - width / length)
+```
+
+Thus you can get a rough idea of correlation with your eye, and over time build up an intuition of how strong correlation is in different settings.
+
+#### Challenge
+
+Visit Philip Stark's [Regression](http://www.stat.berkeley.edu/~stark/SticiGui/Text/regression.htm) chapter and use the interactive SD line tool (Figure 9-1) to gain some "intuition" about correlation. Vary the sample size and correlation. Try negative correlation.
+
+<!-- end challenge -->
+
+### Which correlation?
+
+Correlation gives a sense of the relationship, but it depends on the sample size. With more data, a correlation coefficient is better estimated. The idea is that there is some relationship between two phenotypes, which we can estimate in terms of this correlation coefficient. With more data, we get a better estimate.
+
+There are a variety of approaches to measuring correlation. What is generally done is to use the standard, or Pearson, correlation unless there are strong reasons to doubt a linear relationship. In that case the options are to transform the data (as we did above with `log2`) or use an approach that is less sensitive to linearity.
+
+The non-linear approach, an example of non-parametric approaches, measures the degree of monotonic relationship by replacing the data with its ranks. 
+The challenge with using measures based on ranks is that we lose some power to detect relationship by making fewer assumptions. Note also that if two phenotypes have the same rank order, then their Spearman correlation is 1, although their Pearson correlation might be somewhat less.
+
+Here are several different ways to compute correlation, each with its own assumptions. They each give slightly different values. Clearly, there are many subtle issues here, and best to consult with a professional if you head down this path.
+
+#### Challenge
+
+Calculate the Spearman correlation, which is based on ranks. How does it compare to Pearson correlation? What type of plot would help illustrate Spearman correlation?
+Argue why Pearson correlation may be adequate.
+
+<!-- end challenge -->
+
+<!---
+## Pearson, Spearman, rank and Kendall correlation
+with(surveys_dip_spec,
+     c(pearson  = cor(weight, hindfoot_length),
+       rank     = cor(rank(weight), log2(hindfoot_length)),
+       spearman = cor(weight, hindfoot_length, method = "spearman"),
+       kendall  = cor(weight, hindfoot_length, method = "kendall")))
+ggplot(surveys_dip_spec, 
+       aes(x=rank(weight), y=rank(hindfoot_length))) +
+  geom_point() +
+  geom_smooth()
+--->
+
+#### Correlation Test
+
+```{r}
+with(surveys_dip_spec, cor.test(weight, hindfoot_length))
+```
+
+The significance of correlation depends on `df`, which is 2 less than sample size. In this case, the test is highly signficant. There is a confidence interval provided, which you will notice is typically not symmetric about the estimated correlation.
+
+#### Challenge
+
+What are the test statistic ($t$) significance ($p$-value) for this correlation?
+
+<!-- end challenge -->
+
+<!---
+tmp <- with(surveys_dip_spec, 
+            cor.test(weight, hindfoot_length))
+tmp$p.value
+tmp$statistic
+--->
+
+#### Linear Model interpretation of Correlation
+
+Correlation measures the association between two numeric variables, here `weight` and `hindfoot_length`. One of these variables can be viewed, at least formally, as the predictor and the other as the response. Here, we view `weight` as the predictor of `hindfoot_length`, which we can write in a formula as
+
+```{r eval=FALSE}
+hindfoot_length ~ weight
+```
+
+```{r}
+surveys_plot + 
+  geom_point(alpha = 1, shape = 1) +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+```{r}
+surveys_plot + 
+  geom_point(alpha = 1, shape = 1) +
+  geom_abline(intercept=intercept, slope=slope,
+              col="red", lwd=1) +
+  geom_smooth(method = "lm", se = FALSE)
+```
+We say that we "regress `hindfoot_length` on `weight`". This is sometimes called "simple linear regression", because the right side of this formula can get a lot more complicated (in later lessons). We introduce this concept here to make the bridge to the next lesson on covariates, and to connect correlation to linear models.
+
+Simple linear regression is a special kind of "linear model". The linear model function `lm()` provides another tool to test correlation, with more flexibility than `cor.test()`. `lm` has more bells and whistles and `lm` can handle more complicated relationships.
+
+Put another way, correlation and linear regression are two perspectives on the same relationship. Here we fit a linear model
+
+```{r}
+fit <- lm(hindfoot_length ~ weight, surveys_dip_spec)
+summary(fit)
+```
+
+#### Challenge
+
+While there is a lot of output, notice that the `Coefficients` table has a column for `t value`. Verify that the `t value` for `weight` is identical with the `t` from the `cor.test`. What other terms agree between these to formal summaries?
+
+<!-- end challenge -->
+
+<!---
+round(summary(fit)$coefficients["weight","t value"], 2)
+--->
+
+#### Challenge
+
+Earlier, we had used a `sqrt` transformation to adjust for skew in `weight`. Redo above plots and analysis with a `sqrt` transform.
+
+Hint: For plots, you can use `scale_x_sqrt()` to transform the x axis.
+
+<!-- end challenge -->
+
+<!---
+surveys_plot + 
+  geom_point(alpha = 1, shape = 1) +
+  scale_color_brewer(type="qualitative", palette = "Paired") +
+  geom_smooth(method="lm") +
+  scale_x_sqrt()
+with(surveys_dip, cor.test(sqrt(weight), hindfoot_length))
+fit_sqrt <- lm(hindfoot_length ~ sqrt(weight), surveys_dip)
+summary(fit_sqrt)
+--->
+### Further Reading
+
+The interested reader might look at the chapters on [Correlation](http://www.stat.berkeley.edu/~stark/SticiGui/Text/correlation.htm) and [Regression](http://www.stat.berkeley.edu/~stark/SticiGui/Text/regression.htm) by [Philip Stark](http://www.stat.berkeley.edu/~stark/).

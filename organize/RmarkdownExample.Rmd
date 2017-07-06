@@ -1,0 +1,76 @@
+---
+title: "Example Rmarkdown"
+output:
+  pdf_document: default
+  html_document:
+    toc: yes
+    toc_float: yes
+---
+#Large  header
+ 
+Regular text, non-code. 
+ 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;How to indent text
+ 
+*You can italicize things.*
+**You can bold things.**
+Notice how a single paragraph break shows up as a space.
+ 
+##Slightly smaller sub-header
+ 
+###Even smaller sub-header
+ 
+####You get the idea
+ 
+Including a link http://cran.mtu.edu/
+ 
+```{r ThisLabelIsForYouItsNotShownNoSpaces}
+#This all shows up in a "code" grey box
+#Code will be automatically colored to highlight file names, command modifiers, etc.
+myData = data.frame(replicate(10,sample(0:1,1000,rep=TRUE)))
+```
+ 
+# Next large header
+ 
+You can include the output of some in-line code like: The dimensions of my data are `r dim(myData)`
+ 
+And you can also include the actual in-line code like `dim(myData)`
+ 
+## Making some figures
+
+```{r MakeSomePlots}
+hist(myData$X1)
+```
+ 
+Modifying all figures in a chunk with parameters in the chunk header
+```{r AddSomePlotParameters,fig.width=3.5,fig.height=4}
+hist(myData$X2)
+hist(myData$X3)
+```
+ 
+## Analyzing some data
+
+This option only shows the output, not the code
+
+```{r echo=FALSE}
+#Comments like this won't be shown either
+x <- rnorm(100)
+y <- 2*x + rnorm(100)
+cor(x, y)
+```
+ 
+This option only shows the code, not the output
+
+```{r results="hide"}
+x <- rnorm(100)
+y <- 2*x + rnorm(100)
+cor(x, y)
+```
+ 
+This option evaluates the code but neither code nor output is displayed
+
+```{r include=FALSE}
+x <- rnorm(100)
+y <- 2*x + rnorm(100)
+cor(x, y)
+```

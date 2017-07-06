@@ -1,0 +1,139 @@
+---
+title: "R functions"
+author: "Brian S. Yandell"
+date: "7/5/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+A simple function has a name, possibly one or more arguments, and a body.
+
+```{r}
+calcGCPct <- function(xSeq) {
+  length(which(xSeq %in% c("C","G"))) / length(xSeq)
+}
+```
+
+```{r}
+mySeq <- sample(c("A","C","G","T"), 1000, replace = TRUE)
+
+calcGCPct(mySeq)
+calcGCPct(mySeq[1:100])
+```
+
+Notes about arguments
+
+- order: full names, abbreviated names, order
+- assignment: = v. <-
+- elipsis (`...`) for arbitrary additional arguments
+- defaults
+
+```{r}
+makeVector <- function(aa, ab, ba) { c(aa, ab, ba) }
+makeVector(1, 2, 3)
+makeVector(1, 2, aa = 3)
+makeVector(1, ab = 3,a = 2)
+
+makeAlphanumericSample <- function( alphabet, 
+                                    seqLength = 1000, 
+                                    useProbabilities = NULL) {
+  if(is.null(useProbabilities)) 
+    useProbabilities <- rep(1/length(alphabet), length(alphabet))
+  sample(alphabet, seqLength, replace=TRUE, prob=useProbabilities)
+}
+
+makeDNASample <- function(...){
+  makeAlphanumericSample(c("A","C","G","T"), ...)
+}
+
+makeDNASample(seqLength = 100)
+makeDNASample(seqLength = 100, 
+              useProbabilities = c(0,.5,.5,0))
+```
+
+Notes about return values:
+
+- returns last evaluated expression.
+- thus only one object, but object can be a list of objects
+- Hadley Wickham suggests reserving "return(expr)" for early returns.
+
+The following returns `NULL`:
+
+```{r}
+testFunction <- function(){}
+testFunction()
+```
+
+```{r}
+testFunction <- function(x) 5+7
+testFunction()
+```
+
+```{r}
+testFunction <- function(x) { 5+7; 13 }
+testFunction()
+```
+
+```{r}
+testFunction <- function(x){
+  if(missing(x)) 
+    return(0)
+  x^2
+}
+testFunction()
+testFunction(4)
+```
+
+Notes about scope
+
+- R looks first in the local environment for a variable
+- if not found, it looks at the environment of the calling function
+- can force use of Global environment by using <--
+
+```{r}
+testFunction <- function(x){ 
+  y <- 5
+  x + y 
+}
+rm(y)
+```
+
+```{r}
+testFunction(2)
+```
+
+```{r eval = FALSE}
+y
+```
+
+```
+## Error: object 'y' not found
+```
+
+```{r}
+y <- 2
+testFunction(2)
+y
+
+```{r}
+testFunction <- function(x) {
+  v1 <- x + y
+  y <- 10
+  v1 + y
+}
+y<-2
+testFunction(4)
+```
+
+```{r}
+testFunction <- function(x){
+  y <<- 5
+  x + y
+}
+rm(y)
+testFunction(2)
+y
+```

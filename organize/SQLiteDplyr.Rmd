@@ -1,0 +1,442 @@
+---
+title: "sqlite"
+author: "Brian S Yandell"
+date: "September 1, 2016"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## SQLite with R/dplyr Introduction
+
+This is an example using the `dplyr` package to access SQLite. It draws on lessons from the [UW-Madison Data Carpentry Workshop](http://uw-madison-aci.github.io/2016-06-01-uwmadison/). Other resources include the [Data Wrangling Cheat Sheet](https://www.rstudio.com/resources/cheatsheets/) and the [R/dplyr Databases Vignette](https://cran.rstudio.com/web/packages/dplyr/vignettes/databases.html).
+For more information on SQL in general see the [Lynda.com SQL Essential Training](https://www.lynda.com/SQL-tutorials/SQL-Essential-Training/139988-2.html) or the [W3 SQL Tutorial](http://www.w3schools.com/sql/).
+
+### Motivation
+
+The [Databases with SQL](http://www.datacarpentry.org/sql-ecology-lesson/00-sql-introduction.html) lessons give a good motivation in general for using SQL. Here we stress a few points that will be important for Big Data projects in omic studies:
+
+* SQL can make working with multiple related files manageable.
+* SQL scales nicely to large projects, where you only want to examine a small portion of the data.
+* Multiple people can work off the same SQL when properly set up.
+
+### Learning Goals
+
+The goal is to use R tools with SQL to reproduce what was done with the SQL tool embedded in Firefox, we’ll need to do the same basic data operations:
+
+* select subsets of the data (rows and columns)
+* group subsets of data
+* do math and other calculations
+* combine data across spreadsheets
+
+### Setup
+
+Make sure you have the package `dplyr`:
+
+```
+install.packages("dplyr")
+```
+
+Attach the package `dplyr`. 
+The `suppressPackageStartupMessages()` suppresses messages.
+
+```{r}
+suppressPackageStartupMessages({
+  library(dplyr)
+})
+```
+
+Download the SQLite file `portal_mammals.sqlite` from the [Portal Project Teaching Database](https://figshare.com/articles/Portal_Project_Teaching_Database/1314459).
+
+It helps to save the name for later use.
+
+```{r}
+sql_file <- "../data/portal_mammals.sqlite"
+```
+
+## Basic queries: 
+
+### Connecting to SQLite database tables
+
+Connect to the SQLite database with the command `src_sqlite()`. There are similar commands for other types of SQL databases.
+
+```{r}
+sql_connect <- src_sqlite(sql_file)
+```
+
+Connect to a table in the SQLite database.
+
+```{r}
+species_sql <- tbl(sql_connect, "species")
+species_sql
+```
+
+The object `species_sql` is not actually a data table, even though it looks like it is. Notice for instance that the table begins and ends with
+
+```
+## Source:   query [?? x 4]
+# ... with more rows
+```
+
+since the number of rows is not yet known (`??`). Typicall we refine this object to the rows and columns we want, and then `collect` it from SQL to have the data "in hand" that we want.
+
+```{r}
+species_all <- species_sql %>% collect
+species_all
+```
+
+The `species` table is fairly small, but if it were huge, we might only want to work with a part of it. The SQL verbs `SELECT` and `WHERE` have comparable R/dplyr verbs `select()` and `filter()`. We use the dplyr "pipes" to make this nice and clean.
+
+### Select columns
+
+Select `year`, `month` and `day` only from table `surveys`.
+
+```{r}
+tbl(sql_connect, "surveys") %>%
+  select(year,month,day)
+```
+
+### Distinct (unique) entries in a column.
+
+Just get distinct `species_id`.
+
+```{r}
+tbl(sql_connect, "surveys") %>%
+  distinct(species_id)
+```
+
+or `species_id` and `year`
+
+```{r}
+tbl(sql_connect, "surveys") %>%
+  distinct(year,species_id)
+```
+
+### Calculated values
+
+Calculations in `dplyr` are often done with the `mutate()` verb. The `filter()` verb (explained below) removes rows with missing `weight_kg` values.
+
+```{r}
+tbl(sql_connect, "surveys") %>%
+  mutate(weight_kg = weight / 1000) %>%
+  filter(!is.na(weight_kg)) %>%
+  select(plot_id,species_id,weight_kg)
+```
+
+You can use `mutate()` to change column values without creating new columns. Here we change `species_id` to lower case.
+
+```{r}
+tbl(sql_connect, "surveys") %>%
+  mutate(weight_kg = weight / 1000,
+         species_id = tolower(species_id)) %>%
+  filter(!is.na(weight_kg)) %>%
+  select(plot_id,species_id,weight_kg)
+```
+
+### Filter rows
+
+Filter on `species_id` being `DM`
+
+```{r}
+tbl(sql_connect, "surveys") %>%
+  filter(species_id == "DM")
+```
+
+Filter on `species_id` being `DM` and `year` past 2000.
+
+```{r}
+tbl(sql_connect, "surveys") %>%
+  filter(species_id == "DM",
+         year > 2000)
+```
+
+Filter on `species_id` being one of `DM`, `DO` or `DS`.
+
+```{r}
+tbl(sql_connect, "surveys") %>%
+  filter(species_id == "DM" |
+           species_id == "DO" |
+           species_id == "DS")
+```
+
+Same result done with the `%in%` operator.
+
+```{r}
+tbl(sql_connect, "surveys") %>%
+  filter(species_id %in% c("DM","DO","DS"))
+```
+
+We can also add comments with `#` character.
+
+```{r}
+tbl(sql_connect, "surveys") %>%
+  filter(species_id %in% c("DM","DO","DS"), # subset of species
+         year > 2000) # recent years
+```
+
+### Order rows
+
+One nice way to order is with the `arrange()` verb. I added a filter to eliminate any rows with missing `species_id` or `sex`.
+
+```{r}
+tbl(sql_connect, "surveys") %>%
+  filter(!is.na(species_id),
+         !is.na(sex)) %>%
+  arrange(species_id)
+```
+
+We can arrange by more than one column:
+
+```{r}
+tbl(sql_connect, "surveys") %>%
+  filter(!is.na(species_id),
+         !is.na(sex)) %>%
+  arrange(species_id,hindfoot_length,sex)
+```
+
+### Order of Execution
+
+SQL clauses are written in a fixed order, but R/dplyr sorts that out for us.
+We can put them in any order, provided the columns and rows we want to act on are available at that step.
+
+Suppose we want to select `genus` and `species` but filter to only include the `taxa` labeled `"Bird"`. 
+
+```{r}
+species_genus_Bird <- tbl(sql_connect, "species") %>%
+  filter(taxa == "Bird") %>%
+  select(genus,species)
+```
+
+Notice that we filter first, as once we select `genus` and `species`, we no longer have the `taxa` column. This behavior is somewhat different from the SQLite commands highlighted in Data Carpentry, so watch out. The following will not work:
+
+```
+## This does not work -- why?
+tbl(sql_connect, "species") %>%
+  select(genus,species) %>%
+  filter(taxa == "Bird")
+```
+
+## SQL Aggregation
+
+### Count and Group By
+
+The SQL `COUNT` and `GROUP BY` have corresponding verbs in `dplyr`. The `group_by()` verb enables us to group by variables and do various things. What is often done is to `summarize()` some aspect of variables by group.
+
+The count verb is `n()`, and there are other useful verbs such as `row_number()`. However, these will not work properly on SQL objects, but rather on tables after we `collect` them. 
+
+```{r}
+species_all %>%
+  group_by(genus) %>%
+  summarize(count = n()) %>%
+  arrange(desc(count))
+```
+### Having
+
+The SQL `HAVING` does not have an analogous verb. However, you can get the same thing using `group_by()` and `summarize()` and `filter()`. Note that here we get the count of the number rows with missing `species_id`.
+
+```{r}
+tbl(sql_connect, "surveys") %>%
+  group_by(species_id) %>%
+  summarize(count = n()) %>%
+  filter(count > 10)
+```
+
+### Joins and Merges
+
+One great power of databases is to merge or join data from tables of different type. SQLite uses the `JOIN` verb (with possible prefix), while dplyr uses a variety of `*_join`. The dplyr package has a variety of ways to join data, depending on the purpose. We can only introduce the ideas here. See the dplyr cheatsheet and manual page for `join` for more information.
+
+The dplyr join routines will join by column name and value. 
+
+Note: There is a `merge()` verb in base R. This is not what we are examining.
+
+Let's `collect` the subset of surveys examined above:
+
+```{r}
+surveys_2001 <- tbl(sql_connect, "surveys") %>%
+  filter(species_id %in% c("DM","DO","DS"), # subset of species
+         year > 2000) %>% # recent years
+  collect
+dim(surveys_2001)
+```
+
+To recall, we recreate `species_all`.
+
+```{r}
+species_all <- tbl(sql_connect, "species") %>%
+  collect
+dim(species_all)
+```
+
+```{r}
+species_surveys <- full_join(species_all, surveys_2001)
+dim(species_surveys)
+```
+Notice how the `left_join` and `right_join` are different sizes. Why is this?
+
+```{r}
+dim(left_join(species_all, surveys_2001))
+dim(right_join(species_all, surveys_2001))
+```
+
+The `anti_join` will return rows of `species_all` that have no `species_id` in `surveys_2001`. Why are these not found in `surveys_2001`?
+
+```{r}
+anti_join(species_all, surveys_2001)
+```
+
+## Advanced Topics
+
+### Other dplyr verbs for SQL Databases
+
+There are a host of other dplyr `verbs`. See the references at the top of this document for help. The `databases` document is part of the `dplyr` package: type `databases` in the `Help` tab of Rstudio, or to go to the `Packages` tab, click on `dplyr` and then click on `User guides, package vignettes and other documentation`.
+
+You can also use arbitrary SQL directly:
+
+```{r}
+tbl(sql_connect, build_sql(
+  "SELECT species_id, COUNT(surveys.species_id)
+   FROM surveys
+   GROUP BY species_id
+   HAVING COUNT(surveys.species_id) > 10")) %>%
+  collect
+```
+
+### Big Data
+
+With very large tables, say many thousands or millions of rows, it makes sense to `select` and `filter` before the `collect` stage, so that the collected object is manageable size and is focused on material you want. For instance, for genomic data, one typically `filter`s to a chromosome and a megabyte region, possibly `select`ing a subset of columns. With SQLite, this is very fast, and ensures that you only have in hand what you want.
+
+That is, the basic philosophy is to clean up your data, store it somewhere, place it in a SQL database, and then collect only the parts you need when you need them. The SQLite database could be in another part of your computer, in a folder in Box, or somewhere on the internet. [There may be access issues, and time delays with some configurations.] 
+
+Let's compare the complete `species` table with the reduced table for `Bird`.
+
+```{r}
+species_all <- tbl(sql_connect, "species") %>%
+  collect
+dim(species_all)
+```
+
+```{r}
+species_genus_Bird <- tbl(sql_connect, "species") %>%
+  filter(taxa == "Bird") %>%
+  select(genus,species) %>%
+  collect
+dim(species_genus_Bird)
+```
+
+Remember, it is only at the `collect` step that data are collected from the SQL database. Fewer columns and rows means less space and faster subsequent computation.
+
+*Challenge:* Why do you not need to save large data files locally? Think about several reasons why and why not to save large data files on your computer.
+
+### Creating SQLite Database with R/dplyr
+
+SQL has a `CREATE` verb to create a database and tables within it. Here are the basic steps to create an SQLite database in R with `dplyr`.
+We illustrate with the `species_all` and `surveys_2001` objects. 
+Here are the commands to create the database and copy `species_all` and `surveys_2001` in with names `species` and `surveys`, respectively.
+
+```
+my_sql_db <- src_sqlite("my_db.sqlite", create = TRUE)
+copy_to(my_sql_db, species_all, "species", temporary = FALSE)
+copy_to(my_sql_db, surveys_2001, "surveys", temporary = FALSE)
+```
+
+The above was not actually run. The code below is run, but has some
+checks to see if things exist already.
+Give a path to create an SQLite database. Here we check if the database exists, and if so, define `my_tbls` as the set of tables already in the database.
+
+```{r}
+if(!file.exists("my_db.sqlite")) {
+  my_sql_db <- src_sqlite("my_db.sqlite", create = TRUE)
+  my_tbls <- NULL
+} else {
+  my_sql_db <- src_sqlite("my_db.sqlite", create = FALSE)
+  my_tbls <- collect(tbl(my_sql_db, "sqlite_stat1"))$tbl
+}
+```
+
+Now `copy_to` this database the species table
+
+```{r}
+if(!("species" %in% my_tbls)) {
+  copy_to(my_sql_db, species_all, "species", temporary = FALSE)
+}
+```
+
+and the survey table.
+
+```{r}
+if(!("surveys" %in% my_tbls)) {
+  copy_to(my_sql_db, surveys_2001, "surveys", temporary = FALSE)
+}
+```
+
+The SQLite database now has three tables.
+
+Using the option `temporary = FALSE` forces the tables to be written into the SQLite database.
+
+```{r}
+my_sql_db
+```
+The `sqlite_stat1` is a table to manage information about the database. You can look at it, but this one is not very interesting.
+
+```{r}
+tbl(my_sql_db, "sqlite_stat1")
+```
+
+We can check the size of the saved file within R, or by looking at the directory outside of R. This file can be saved somewhere for later use.
+
+```{r}
+file.size("my_db.sqlite")
+```
+
+### Indexing
+
+Indexing of SQL is a way to speed up access for large database tables. 
+The SQL verb is `INDEX`.
+This is done in dplyr with `copy_to()` at the time the table is created.
+
+```{r}
+if(!("surveys_index" %in% my_tbls)) {
+  copy_to(my_sql_db, surveys_2001, "surveys_index", temporary = FALSE,
+          indexes = list(sp="species_id",yearsex=c("year","sex")))
+}
+```
+Here we see that the indexes were actually created.
+
+```{r}
+tbl(my_sql_db,"sqlite_stat1")
+```
+
+### Dropping SQL Tables
+
+Generally, one should take great care in deleting, removing or dropping electronic objects. Once gone, it may be gone forever. Having said that, there is an SQL `DROP` verb to drop a table from a database, or a whole database.
+One can also simply remove the `*.sqlite` file from a folder.
+
+In `dplyr`, the drop verb is not revealed to users quite so directly, for the reasons stated above. There is a command `db_drop_table()` but it is pretty arcane. Here we show how to drop the `surveys` table from the database, but we don't actually run it in this markdown document.
+
+```
+db_drop_table(my_sql_db$con,"surveys")
+```
+
+### Structure of SQL Connection
+
+The R/dplyr SQL verbs use "lazy evaluation". That is, operations are only done when absolutely necessary. The SQL connect structure created by a call to `src_sqlite()` is basically a set of pointers into the SQL database.
+It does not actually contain any of the data, but instead points to where the data are and what to do to get the requested parts at the moment of `collect`ion.
+
+```{r}
+sql_connect <- src_sqlite(sql_file)
+species_sql <- tbl(sql_connect, "species")
+str(species_sql)
+```
+
+The object `species_genus_Bird` before `collect`ing a set of instructions in machine-readable form to get the data from the SQL database. Look carefully to see reference to `taxa`, `genus` and `species`. 
+
+```{r}
+species_genus_Bird <- tbl(sql_connect, "species") %>%
+  filter(taxa == "Bird") %>%
+  select(genus,species)
+str(species_genus_Bird)
+```

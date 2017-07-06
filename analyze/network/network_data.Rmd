@@ -1,0 +1,68 @@
+---
+title: "Network Data"
+output:
+  html_document: default
+  html_notebook: default
+---
+
+Examples pulled from **Network Visualization with R**, [Polnet 2016](http://www.kateto.net/polnet2016) by Katya Ognyanova.
+
+## Pull in Polnet2016 data
+
+The following step will download the data files and Katya's tutorial.
+
+```{r polnet2016}
+if(!file.exists("polnet2016.zip")) {
+  download.file("http://kateto.net/wp-content/uploads/2016/06/polnet2016.zip",
+              "polnet2016.zip")
+}
+if(!dir.exists("Data files")) {
+  unzip("polnet2016.zip")
+}
+```
+
+```{r data_dir}
+data_dir <- "Data files"
+```
+
+
+```{r library}
+suppressPackageStartupMessages({
+  library(readr)
+  library(dplyr)
+})
+```
+
+#### Dataset 1: edgelist
+
+```{r}
+(nodes <- 
+   read_csv(file.path(data_dir,
+                      "Dataset1-Media-Example-NODES.csv")))
+```
+
+```{r}
+(links <- 
+   read_csv(file.path(data_dir, 
+                      "Dataset1-Media-Example-EDGES.csv")) %>%
+   group_by(from,to,type) %>%
+   summarize(weight = sum(weight)) %>%
+   ungroup %>%
+   arrange(from,to))
+```
+
+#### Dataset 2: matrix
+
+```{r}
+(nodes2 <- read_csv(file.path(data_dir, 
+                              "Dataset2-Media-User-Example-NODES.csv")))
+```
+
+```{r}
+## First row is names, so need to use read.csv.
+(links2 <- read.csv(file.path(data_dir, 
+                              "Dataset2-Media-User-Example-EDGES.csv"),
+                    header = TRUE, 
+                    row.names = 1))
+```
+

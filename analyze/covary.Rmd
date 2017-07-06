@@ -1,0 +1,326 @@
+---
+title: "Covariate"
+output:
+  html_document: default
+  html_notebook: default
+---
+
+```{r libraries, message=FALSE}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+```
+
+### Learning Objectives
+
+* examine how covariates reveal patterns in traits
+* plot relationships adjusting for covariates 
+* determine how covariates change interpretation of relationships
+
+### Read Phenotypes
+
+Here we read in data and reduce to species with counts at least 10.
+
+```{r read}
+surveys <- read.csv("../data/portal_data_joined.csv")
+## Remove missing data.
+surveys_complete <- surveys %>%
+  filter(species_id != "", !is.na(weight)) %>%
+  filter(!is.na(hindfoot_length), sex != "")
+# count records per species
+species_counts <- surveys_complete %>%
+  group_by(species_id) %>%
+  tally
+# get names of the species with counts >= 10
+frequent_species <-  species_counts %>%
+  filter(n >= 10) %>%
+  select(species_id)
+# filter out the less-frequent species
+surveys_complete <- surveys_complete %>%
+  filter(species_id %in% frequent_species$species_id)
+```
+
+Now focus on one genus, `Dipodomys`.
+
+```{r}
+surveys_dip <- surveys_complete %>%
+  filter(genus == "Dipodomys")
+```
+
+## Correlation across species in genus
+
+Here we expand from species to genus and look at correlation, first by showing a scatterplot.
+
+```{r}
+surveys_plot <- ggplot(surveys_dip, 
+                       aes(x = weight, 
+                           y = hindfoot_length))
+```
+
+```{r}
+surveys_plot + 
+  geom_point(alpha = 1, shape = 1)
+```
+
+Add a straight line does not seem to capture the relationship.
+
+```{r}
+surveys_plot + 
+  geom_point(alpha = 1, shape = 1, col = "gray") +
+  geom_smooth(method = "lm")
+```
+
+Adding a smooth line does a better job, but is this what we really want?
+
+```{r}
+surveys_plot + 
+  geom_point(alpha = 1, shape = 1, col = "gray") +
+  geom_smooth()
+```
+
+### Relate Species to a Phenotype
+
+The above plot has a disturbing pattern that the data seem to be from more than one group, which might be found with species in the genus. Here we examine one phenotype at a time with species, showing boxplots and densities.
+
+```{r}
+ggplot(surveys_dip,
+       aes(x = species, y = weight)) +
+  geom_jitter(col="lightgrey") +
+  geom_boxplot() + 
+  coord_flip()
+```
+
+```{r}
+ggplot(surveys_dip,
+       aes(x = weight, col = species, )) +
+  geom_density()
+```
+
+Sometimes it is easier to see patterns by using facets.
+
+```{r}
+ggplot(surveys_dip,
+       aes(x = weight, col = species, )) +
+  geom_density() +
+  facet_grid(species~.)
+```
+
+### Challenge
+
+Make boxplots and density plots for `hindfoot_length`. How do these compare with the `weight` plots?
+
+<!-- end challenge -->
+
+<!---
+## boxplots by species
+ggplot(surveys_dip,
+       aes(x = species, y = hindfoot_length)) +
+  geom_jitter(col="lightgrey") +
+  geom_boxplot() + 
+  coord_flip()
+
+## density
+ggplot(surveys_dip,
+       aes(x = hindfoot_length, col = species, )) +
+  geom_density()
+
+# density using facets.
+gplot(surveys_dip,
+       aes(x = hindfoot_length, col = species, )) +
+  geom_density() +
+  facet_grid(species~.)
+--->
+
+## Plot two phenotypes adjusting for species
+
+```{r}
+surveys_plot <- ggplot(surveys_dip, 
+                       aes(x = weight, 
+                           y = hindfoot_length,
+                           col = species))
+```
+
+```{r}
+surveys_plot + 
+  geom_point(alpha = 1, shape = 1) +
+  scale_color_brewer(type="qualitative", palette = "Dark2")
+```
+
+### Add a smooth and straight line
+
+```{r}
+surveys_plot + 
+  geom_point(alpha = 1, shape = 1) +
+  scale_color_brewer(type="qualitative", palette = "Dark2") +
+  geom_smooth(se=FALSE, col="black") +
+  geom_smooth(se=FALSE, col="red", method="lm")
+```
+
+This is not very satisfying. The straight line (which we saw in the previous lesson) misses key aspects of the relationship, and the curved line, while going through the data, does this without explicit regard to species. Now we allow separate lines by species. Since our `surveys_plot` object already identifies color with species, the change is very simple.
+
+```{r}
+surveys_plot + 
+  geom_point(alpha = 0.2, shape = 1) +
+  scale_color_brewer(type="qualitative", palette = "Dark2") +
+  geom_smooth(se=FALSE, method="lm")
+```
+
+It might be easier to see this in separate facets.
+
+```{r}
+surveys_plot + 
+  geom_point(alpha = 1, shape = 1) +
+  scale_color_brewer(type="qualitative", palette = "Dark2") +
+  geom_smooth(se=FALSE, method="lm", col = "black") +
+  facet_wrap(~species) +
+  theme(legend.position="none")
+```
+
+### Adjusting correlation by covariate
+
+The correlation is differs across species:
+
+```{r}
+(cor_species <- surveys_dip %>%
+  group_by(species) %>%
+  summarize(cor = cor(weight, hindfoot_length)))
+```
+
+Compare these with the overall correlation
+
+```{r}
+with(surveys_dip, cor(sqrt(weight), hindfoot_length))
+```
+
+#### Challenge
+
+Why do the species-specific and overall correlations differ so much?
+
+<!-- end challenge -->
+
+<!---
+Most of the correlation between `weight` and `hindfoot_length` can be explained by `species`.
+--->
+
+### Adjusting group mean by other phenotype
+
+We can turn this around and ask what is the mean for `log2(WBC)` by `Sex`.
+
+```{r}
+(surveys_mean <- surveys_dip %>%
+  group_by(species) %>%
+  summarize_at(vars(weight, hindfoot_length), mean))
+```
+
+We can add these to a plot with straight lines to verify that the regression lines go through the means.
+
+```{r}
+ggplot(surveys_dip, aes(x=weight, y=hindfoot_length, col=species)) +
+  geom_point(alpha = 1, shape = 1) +
+  scale_color_brewer(type="qualitative", palette = "Dark2") +
+  geom_smooth(method="lm", col="black") +
+  geom_point(data = surveys_mean,
+             aes(x=weight, y=hindfoot_length),
+             size = 4, col = "black", shape = 1) +
+  facet_wrap(~species) +
+  theme(legend.position="none")
+```
+
+### Linear Model Fits with additive covariate
+
+Here we repeat what we had before, but we provide an analysis of variance (ANOVA) summary wtih `anova()` rather than the usual `summary()`. We are using linear models and ANOVA without explaining many details. That would be a different lesson.
+
+```{r}
+fit <- lm(hindfoot_length ~ weight, surveys_dip)
+anova(fit)
+```
+
+Now we add `species` to the model. Note that this model assumes the correlations within species are the same. Put another way, we assume the lines in plots are parallel.
+
+```{r}
+fit_species <- lm(hindfoot_length ~ species + weight, surveys_dip)
+anova(fit_species)
+```
+
+We can formally compare these fits to see if we improved the fit.
+
+```{r}
+anova(fit,fit_species, test="F")
+```
+
+The p value `PR(>F)` shows that the fit is dramatically improved.
+
+### Linear Model with interacting covariate
+
+Are the slopes the same? Sometimes the relationship between two phenotypes shifts with level of a covarate. For instance, males and females have different correlations, and we want to account for that in our linear model. We do that by replacing the plus (`+`) with an asterisk (`*`).
+
+```{r}
+fit_species_int <- lm(hindfoot_length ~ species * weight, surveys_dip)
+anova(fit_species_int)
+```
+
+We can compare this to the parallel line model.
+
+```{r}
+anova(fit_species, fit_species_int, test="F")
+```
+
+Notice that the `F` statistic is the same here as for the `species:weight` term in the earlier table. This interaction term, `species:weight`, is highly significant.
+When there are significant interactions, it is difficult to interpret the main effects. It is usually best in that situation to report the significant interaction and then evaluate each level of the covariate (each sex in this case) separately.
+That is, interaction means the relationship is different for different levels of the covariate, and you cannot interpret the relationship averaged over those levels.
+
+Looking back at the plot, we see that for `merriami` species has a steeper slope.
+
+### Relationship of Correlation to Slope
+
+The plots above are a bit confusing for species `spectabilis`, when you notice that this species has the largest correlation of `weight` to `hindfoot_length`, `r (cor_species %>% filter(species == "spectabilis"))$cor`. The reason the slope seems off is that the relationship of slope to correlation is as follows:
+
+```{r eval=FALSE}
+slope(hf ~ wt) = cor(wt, hf) * sd(hf) / sd(wt)
+```
+
+Here is the calculation done separately by species.
+
+```{r}
+surveys_dip %>%
+  group_by(species) %>%
+  summarize(weight_sd = sd(weight),
+            hf_length_sd = sd(hindfoot_length),
+            cor = cor(weight, hindfoot_length)) %>%
+  ungroup %>%
+  mutate(slope = cor * hf_length_sd / weight_sd) %>%
+  select(species,cor,slope,weight_sd,hf_length_sd)
+```
+
+Here are the intercept and slope for species `spectabilis`.
+
+```{r}
+coef(lm(hindfoot_length ~ weight, 
+        surveys_dip %>%
+          filter(species == "spectabilis")))
+```
+
+The following is a much more advanced approach to get the slope and intercept using the `lm()` function with another function called `do()`:
+
+```{r}
+(coef_species <- surveys_dip %>%
+  group_by(species) %>%
+  do(data.frame(coef = coef(lm(hindfoot_length ~ weight, data=.)))) %>%
+  mutate(term = rep(c("intercept", "slope"), length.out = n())) %>%
+  spread(term, coef))
+```
+
+#### Challenge
+
+Now that you have the numbers, explain the paradox between correlations and slopes, particularly for `spectabilis`.
+
+<!-- end challenge -->
+
+<!---
+Interpret table with correlations, slopes and SDs above.
+Refer to rest of Philip Stark's Regression chapter.
+--->
+
+### Recap
+
+Correlation is useful to look for relationships, but it is important to consider other factors that might affect relationships. Sometimes a single value is adequate, but in this case the correlation between `weight` and `hindfoot_length` was confounded by `species`, and appeared stronger than it really is. That is, we were seeing correlation across species rather than within species.

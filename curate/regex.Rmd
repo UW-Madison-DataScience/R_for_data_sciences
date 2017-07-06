@@ -1,0 +1,45 @@
+---
+title: "regex"
+author: "Brian S. Yandell"
+date: "7/5/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+- <http://regexr.com>: Test out your reg expressions before you use them (specify your test expression and it will highlight in a sample document (which you can change) the matches.
+- [regex base-R cheat sheet](http://www.endmemo.com/program/R/grep.php)
+- [Helpful examples on grouping](http://www.regular-expressions.info/rlanguage.html)
+- [Examples on subsetting matches](http://www.dummies.com/how-to/content/how-to-use-regular-expressions-in-r.html)
+- [Getting strsplit in the right format with sapply](http://www.r-bloggers.com/regular-expressions-in-r-vs-rstudio/)
+- [RegexBuddy](http://www.regexbuddy.com/rlanguage.html) 
+
+
+Drew’s example (using `gsub`): 
+
+Searching through these ugly column headings in data frame called x:
+
+```
+Raw Data (595) 1 - 0 h  
+Raw Data (595) 5 - 0 h 30 min 
+Raw Data (595) 7 - 1 h  
+Raw Data (595) 10 - 1 h 30 min 
+Raw Data (595) 13 - 2 h  
+Raw Data (595) 16 - 2 h 30 min 
+```
+
+I used the following `gsub()` statement (within an `apply()` function, but that’s not important here) on data frame `x`:
+
+```
+gsub('\\.*(\\d*) h (\\d*).*', '\\1.0\\2',x)
+```
+
+(On a second look, it’s possible the initial `\\.*` isn’t necessary, but as always, test your regex’s out before executing them)
+
+perl example
+
+```
+gsub('\\.*(\\d*)\\sh\\s(\\d*).*', '\\1.0\\2',x, perl=T)
+```
