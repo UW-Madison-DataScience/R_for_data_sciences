@@ -24,3 +24,5 @@ item          | contents
 [Bates](Bates.md) | index of teaching material developed by Douglas Bates
 `data` | folder with local data
 [LICENSE](LICENSE) | fair use license
+
+Many people contributed to this material. Thanks to [Douglas Bates]((https://github.com/dmbates/) for his coteaching and help in Fall 2014 and 2015. The [COMBEE R Study Group](https://github.com/ComBEE-UW-Madison/RStudyGroup) kindly shared their study material, and are allowing me to use the R Study Group in Fall 2017 to test out this.
