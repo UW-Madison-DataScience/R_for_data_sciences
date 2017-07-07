@@ -17,11 +17,6 @@ file | contents
 [github](github.Rmd) | GitHub Version Control
 [database](database.Rmd) | create and manage external databases
 [SQLiteDplyr](SQLiteDplyr.Rmd) | lesson using dplyr with SQLite
-
-## References
-
-- **Communication & Writing** section of [Profession Skills for Data Science](profSkills.md)
-- [GNU Make Tutorial (Karl Broman)](http://kbroman.github.io/minimal_make)
-- [Reproducible Research Tools](../skills/reproducible.md)
+[writing](writing.md) | Communication & Writing
 
     

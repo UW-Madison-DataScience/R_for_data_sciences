@@ -2,18 +2,17 @@
 
 Reproducible Research Tools This is an eclectic collection of links
 about reproducible research. Some of these will be relevant to [Online &
-Blended Courses](/online), probably for advanced topics, and some are
+Blended Courses](../skills/blended_online.md), probably for advanced topics, and some are
 more relevant to research.
 
--   [Workflow Systems](#workflow)
--   [Publishing & Communications](#comm)
--   [Genomics Platforms](#gen)
--   [Small Molecule Interaction Databases](#bio)
--   [Laboratory Information Management Systems](#lims)
--   [High Throughput & High Performance Computing](#high)
--   [Network Skills for Statisticians](/network-skills)
--   [Reproducible Research
-    Forum](https://groups.google.com/forum/?fromgroups#!forum/reproducible-research)
+-   Workflow Systems
+-   Publishing & Communications
+-   Genomics Platforms
+-   Small Molecule Interaction Databases
+-   Laboratory Information Management Systems
+-   High Throughput & High Performance Computing
+- [Reproducible Research Forum](https://groups.google.com/forum/?fromgroups#!forum/reproducible-research)
+- [Software Carpentry R for Reproducible Scientific Research](http://swcarpentry.github.io/r-novice-gapminder/)
 
 * * * * *
 

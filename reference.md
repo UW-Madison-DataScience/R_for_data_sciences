@@ -1,10 +1,13 @@
 ## References
 
+- [Data Repositories](repositories.md)
+
 - [R for Data Science by Garrett Grolemund and Hadley Wickham (ebook)](http://r4ds.had.co.nz/)
 - [Data wrangling, exploration, and analysis with R by Jenny Bryan (course)](http://stat545.com/)
 - [Data Carpentry: R for Ecologists (workshop)](http://www.datacarpentry.org/R-ecology-lesson/) | [Karl Broman version](http://kbroman.org/datacarpentry_R_2017-01-10/)
 - Data Analysis for the Life Sciences by Rafa Irizarry and Michael Love ([edX series](https://www.edx.org/xseries/data-analysis-life-sciences) & [book](https://leanpub.com/dataanalysisforthelifesciences))
 - [RStudio Cheatsheets](https://www.rstudio.com/resources/cheatsheets/)
+- [R Language Tips & Tricks](learnR.md)
 
 - [Statistical Computing Courses by Karl Broman](http://www.biostat.wisc.edu/~kbroman/teaching/)
 - [Introduction to R for Python Users by Ramnath Vaidyanathan](https://ramnathv.github.io/pycon2014-r/)

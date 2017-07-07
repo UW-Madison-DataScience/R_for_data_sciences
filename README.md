@@ -20,7 +20,9 @@ item          | contents
 ------------- | -----------------
 [overview](overview.Rmd) | Overview of R Material
 [reference](reference.md) | list of references
-[background](background.md) | material on `R` and data science
+[repositories](repositories.md) | list of data repositories
+[learnR](learnR.md) | R Language Tips & Tricks
+[background](background.md) | background material on `R` and data science
 [Bates](Bates.md) | index of teaching material developed by Douglas Bates
 `data` | folder with local data
 [LICENSE](LICENSE) | fair use license

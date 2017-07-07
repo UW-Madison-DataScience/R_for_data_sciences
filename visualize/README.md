@@ -12,5 +12,7 @@ file | contents
 ---- | --------
 [ggplot2](ggplot2.Rmd) | ggplot2 and related stuff
 [shiny](shiny.Rmd) | shiny apps
+[visualize](visualize.md) | visualize with R
+[graphics](graphics.md) | visualization & graphics links
 
 

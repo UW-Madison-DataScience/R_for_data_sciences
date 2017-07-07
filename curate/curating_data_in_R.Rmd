@@ -1,5 +1,5 @@
 ---
-title: "Organizing data in R"
+title: "Curating data in R"
 author: "Brian S. Yandell"
 date: "7/7/2017"
 output: html_document

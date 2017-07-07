@@ -9,6 +9,7 @@ curate data in `R`.
 file | contents
 ---- | --------
 [data](data.Rmd) | Working with Data in R
+[curating_data_in_R](curating_data_in_R.Rmd) | curating data in R (examples)
 [applyExample](applyExample.Rmd) | examples using `for` and `apply`
 [intro_dplyr](intro_dplyr.Rmd) | sub_lesson recasting data.frame examples
 [string](string.Rmd) | characters and strings

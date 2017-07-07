@@ -5,8 +5,8 @@
 -   Organizing Data in R (Doug Bates)
 -   R Easy-To-Use Wraps
 -   R Beginning & Advanced Guides & Tips
--   Visualization with R
--   Building R Packages
+-   [Visualization with R](visualize/visualize.md)
+-   [Building R Packages](organize/package.Rmd)
 -   R, Bioconductor, Biology & Bioinformatics
 -   R Resources & Archives
 
@@ -83,82 +83,6 @@
     Research](https://github.com/umd-byob/presentations/tree/master/2013/0903-knitr_reproducible_research/README.md)
 -   [Frank Harrell's Statistical Reporting
     Tips](http://biostat.mc.vanderbilt.edu/twiki/bin/view/Main/StatReport)
-
-* * * * *
-
-#### Visualization with R
-
--   [Lattice Book Figures with R Code (Deepayan
-    Sarkar)](http://lmdvr.r-forge.r-project.org)
-    -   [Lattice Demo (John
-        Gillett)](http://pages.stat.wisc.edu/~jgillett/327-1/5lattice.pdf)
-        with [R Code](http://pages.stat.wisc.edu/~jgillett/327-1/5.R)
-    -   [Lattice Graphics
-        (inside-R)](http://www.inside-r.org/r-doc/lattice/A_01_Lattice)
-    -   [Lattice Graphics (Weka Learn
-        Studios)](http://www.wekaleamstudios.co.uk/topics/r-environment/lattice-graphics/)
--   [ggplot2 Plotting System for R](http://ggplot2.org)
-    -   [Grammar of Graphics (Weka Learn
-        Studios)](http://www.wekaleamstudios.co.uk/topics/r-environment/ggplot2-r-environment/)
-    -   [ggplot2 and the grammar of graphics (Revolution
-        Analytics)](http://blog.revolutionanalytics.com/2009/09/ggplot2-and-the-grammar-of-graphics.html)
-    -   [Graphics with ggplot2
-        (r4stats.com)](http://r4stats.com/examples/graphics-ggplot2/)
-    -   [History of ggplot2
-        (Wikipedia)](http://en.wikipedia.org/wiki/Ggplot2)
-    -   [Vince Vu's Dynamic FPS
-        Presentation](http://www.vince.vu/talks/): Each frame of Vince's
-        talk animations corresponds to a different estimate along the
-        solution path of the FPS estimator, plotted as biplots using
-        [ggbiplot](https://github.com/vqv/ggbiplot). Each frame was
-        saved as a PNG file, and the sequence converted using
-        [ffmpeg](http://www.ffmpeg.org) into a movie file as described
-        in the [WikiBooks ffmpeg
-        Guide](http://en.wikibooks.org/wiki/FFMPEG_An_Intermediate_Guide/image_sequence).
-        [FPS package to be posted on [Vince Vu's Software
-        Page](http://www.vince.vu/software/) when completed.]
--   [R Graph Gallery on
-    Facebook](https://www.facebook.com/pages/R-Graph-Gallery/169231589826661)
--   [Revolution Analytics Graph
-    Gallery](http://blog.revolutionanalytics.com/2009/01/r-graph-gallery.html)
--   [R Graphics Gallery (Alastair
-    Sanderson)](http://www.sr.bham.ac.uk/~ajrs/R/r-gallery.html)
--   [William S Cleveland's *Visualizing Data*
-    Book](http://www.stat.purdue.edu/~wsc/visualizing.html)
-
-* * * * *
-
-#### Building R Packages
-
--   [Writing R
-    Extensions](http://cran.r-project.org/doc/manuals/R-exts.pdf)
-    -   [Creating R Packages: A
-        Tutorial](http://blog.revolutionanalytics.com/2009/08/creating-r-packages-a-tutorial-draft.html)
-    -   [Freidrich Leisch (2008): Creating R Packages: A
-        Tutorial](http://epub.ub.uni-muenchen.de/6175/)
-    -   [Brian Yandell's Demo
-        Package](http://www.stat.wisc.edu/~yandell/mypackage)
-        ([mydemo.R](http://www.stat.wisc.edu/~yandell/mypackage/inst/mynotes/mydemo.R)
-        &
-        [mypackage\_0.5-1.tar.gz](http://www.stat.wisc.edu/~yandell/mypackage_0.5-1.tar.gz)
-        tarball)
--   Building R Packages for Windows
-    -   [Windows R Tools Official Page (Murdoch
-        Sutherland)](http://www.murdoch-sutherland.com/Rtools/)
-    -   [Karl Broman's Windows Package
-        Info](http://www.biostat.wisc.edu/~kbroman/Rintro/Rwinpack.html)
-    -   [Windows Toolset (R Admin
-        Manual)](http://cran.r-project.org/doc/manuals/R-admin.html#The-Windows-toolset)
-    -   An alternative for your own packages is to submit the package to
-        the http://win-builder.R-project.org site. It will build the
-        package and run the package checks then send email to whoever is
-        listed in the DESCRIPTION file as the maintainer with a link to
-        the results. Especially for those of us who don't use Windows
-        and find the steps required under Windows to be unnecessarily it
-        is wonderful. If you have the fortunes package installed you
-        should check
-
-            > fortune("installing")
 
 * * * * *
 

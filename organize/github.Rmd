@@ -13,6 +13,7 @@ GitHub seems to be the best version control system. It was designed by Linus Tor
 While GitHub can be used for any type of documents, the `RStudio` folks have made elegant and easy connections.
 
 - [Happy Git and GitHub for the useR](http://happygitwithr.com/)
+- [Software Carpentry Version Control with Git](http://swcarpentry.github.io/git-novice/)
 - [Tools for Reproducible Research by Karl Broman](http://kbroman.org/Tools4RR/)
     + [GitHub Tutorial](http://kbroman.org/github_tutorial/)
 - [How GitHub uses GitHub to Build
