@@ -6,6 +6,7 @@
 - Data Analysis for the Life Sciences by Rafa Irizarry and Michael Love ([edX series](https://www.edx.org/xseries/data-analysis-life-sciences) & [book](https://leanpub.com/dataanalysisforthelifesciences))
 - [RStudio Cheatsheets](https://www.rstudio.com/resources/cheatsheets/)
 
+- [Statistical Computing Courses by Karl Broman](http://www.biostat.wisc.edu/~kbroman/teaching/)
 - [Introduction to R for Python Users by Ramnath Vaidyanathan](https://ramnathv.github.io/pycon2014-r/)
 - [Advanced R by Hadley Wickham (ebook)](http://adv-r.had.co.nz/)
 - [Using R and RStudio at Amherst College](https://www.amherst.edu/people/facstaff/nhorton/node/567498) ([Book](https://nhorton.people.amherst.edu/r2/index.php))
@@ -15,6 +16,7 @@
 - <https://www.rdocumentation.org/>
 - <https://open.nasa.gov/explore/>
 - [Modern Dive by Chester Ismay and Albert Y. Kim](https://ismayc.github.io/moderndiver-book/)
+- [Stackoverflow R Tags](https://stackoverflow.com/tags/r/info)
 
 - [Yandell Data Club](https://github.com/byandell/data_club)
 - [Profession Skills for Data Science](http://www.stat.wisc.edu/network-skills) ([markdown version](skills/README.md))
