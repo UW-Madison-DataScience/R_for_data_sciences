@@ -1,0 +1,137 @@
+---
+title: "Organizing data in R"
+author: "Brian S. Yandell"
+date: "7/7/2017"
+output: html_document
+---
+
+The basic tabular data structure (rows correspond to observations, columns to variables) is called a `data.frame` in `R`.
+
+All `R` distributions provide the `datasets` packages which contains several sample datasets, see
+```{r}
+help(package="datasets")
+```
+In an interactive session this will bring up the index of help pages for the package.
+
+An alternative is to list the names of objects in a package
+```{r lsdatasets}
+ls("package:datasets")
+```
+or, often of more interest, list the names and a brief description of the structure
+```{r lsstrdatasets}
+ls.str("package:datasets")
+```
+When examining a new `R` package, `ls.str` is a good way to begin.
+
+Note that in the calls to `ls` and `ls.str` the package name is given as a character string `"package:datasets"`.  This convention is also used in describing which packages are attached in a session.
+```{r sessionInfo}
+sessionInfo()
+```
+
+## Initial examination of data
+
+The `str` function and the data sets help page, if it exists, are where I begin examining data
+```{r strToothGrowth}
+str(ToothGrowth)
+```
+We see that `supp`, the type of supplement, is a factor, as it should be, and both `dose` and `len`, the response are numeric.  It looks as if `dose` may have only a few levels
+```{r xtabsdose}
+xtabs(~dose, ToothGrowth)
+```
+and, indeed, these data are typical text-book data from a small, carefully balanced experiment.
+```{r xtabsdosesupp}
+xtabs(~supp+dose, ToothGrowth)
+```
+
+## Visualization of `ToothGrowth`
+
+I usually start with the `lattice` graphics package for visualization because I am familiar with it.
+```{r}
+library(lattice)
+```
+The `ggplot2` package is widely used and deservedly so.  I do not recommend using the base graphics capabilities.
+
+The `ToothGrowth` data consist of a numeric response, `len`, one categorical covariate, `supp`, and one covariate, `dose`, that could be considered numeric or categorical.
+
+If we want to consider `dose` on a continuous scale we could create an interaction plot (`type=c("g","p","a")`)
+```{r interactionplot,echo=FALSE,fig.width=6,fig.height=3,fig.align='center'}
+xyplot(len ~ dose, ToothGrowth, type=c("g","p","a"),xlab="Dose of vitamin C (mg)",groups=supp,ylab="Tooth length",auto.key=list(columns=2,lines=TRUE,points=FALSE))
+```
+The shape of the curves (and choice of levels) indicates that the logarithm of the dose may be a better scale.
+```{r interaction2,echo=FALSE,fig.width=6,fig.height=3,fig.align='center'}
+xyplot(len ~ dose, ToothGrowth, type=c("g","p","a"),xlab="Dose of vitamin C (mg)",groups=supp,ylab="Tooth length", scales=list(x=list(log=2)),auto.key=list(columns=2,lines=TRUE,points=FALSE,side="top"))
+```
+
+The only problem with this plot is that it wastes space on the horizontal axis.  An alternative is to use the horizontal axis for the response, as in, for example, boxplots
+
+```{r bwplot,echo=FALSE,fig.height=3,fig.width=8,fig.align='center'}
+bwplot(factor(dose)~len|supp,ToothGrowth,layout=c(1,2),xlab="Tooth length",ylab="Dose of vitamin C (mg)",strip=FALSE,strip.left=TRUE)
+bwplot(supp~len|factor(dose),ToothGrowth,layout=c(1,3),xlab="Tooth length",strip=FALSE,strip.left=TRUE)
+```
+
+or dotplots
+
+```{r dotplots,echo=FALSE,fig.height=3,fig.width=8,fig.align='center'}
+dotplot(factor(dose)~len|supp,ToothGrowth,layout=c(1,2),xlab="Tooth length",ylab="Dose of vitamin C (mg)",strip=FALSE,strip.left=TRUE,type=c("g","p","a"))
+dotplot(supp~len|factor(dose),ToothGrowth,layout=c(1,3),xlab="Tooth length",ylab="Administration",strip=FALSE,strip.left=TRUE,type=c("g","p","a"))
+dotplot(factor(dose)~len,ToothGrowth,groups=supp,xlab="Tooth length",ylab="Dose of vitamin C (mg)",type=c("g","p","a"))
+```
+
+or comparative density plots
+```{r densityplots,echo=FALSE,fig.height=3,fig.width=8,fig.align='center'}
+densityplot(~len|supp,ToothGrowth,groups=factor(dose),auto.key=list(columns=3,side="top",lines=TRUE,points=FALSE),layout=c(1,2),strip=FALSE,strip.left=TRUE)
+densityplot(~len|factor(dose),ToothGrowth,groups=supp,auto.key=list(columns=2,side="top",lines=TRUE,points=FALSE),layout=c(1,3),strip=FALSE,strip.left=TRUE)
+```
+
+## Reading data over the Internet
+
+One can give a URL instead of a file name as an argument to functions such as `read.csv` and `read.delim`.  Consider the data at http://www-personal.umich.edu/~bwest/classroom.csv
+```{r readclassroom}
+str(class <- read.csv("http://www-personal.umich.edu/~bwest/classroom.csv"))
+```
+
+Data sets like this use artificial numeric coding of variables that are in fact categorical.  If we summarize these data
+```{r classsummary}
+summary(class)
+```
+we get nonsensical numerical summaries of characteristics like `sex`.  We should change these variables to factors.
+```{r classtrans}
+class <- within(class,{
+  sex <- factor(sex,labels=c("M","F"))
+  minority <- factor(minority,labels=c("N","Y"))
+  classid <- factor(classid)
+  schoolid <- factor(schoolid)
+  childid <- factor(childid)
+})
+str(class)
+summary(class)
+```
+The `childid` variable is redundant but there is no harm in retaining it.
+
+For a categorical variable the summary is a frequency table.  If the number of levels is large, the ones with the largest counts are listed first.  Thus the largest number of students sampled from a single class is 10.  To look at the distribution of the counts we can apply `xtabs` twice.
+```{r tabstabs}
+xtabs(~xtabs(~classid, class))
+```
+Out of the 312 classrooms, 42 have only one student in the study, whose purpose is to determine the effects of teacher training on student performance.
+
+### Class-specific and school-specific variables
+
+Many of the variables are characteristics of teachers and should be constant within a class.  We should check that this is true.
+```{r classvars}
+str(classvars <- unique(subset(class,select=c("yearstea","mathknow","housepov","mathprep","classid","schoolid"))))
+summary(classvars)
+xtabs(~xtabs(~schoolid,classvars))
+```
+
+The important information from the summary is that there are 312 rows in this dataframe, corresponding to the 312 classes.  If any of the other variables were not constant within class we would have a greater number of rows.
+
+We also see that the number of classes sampled per school is highly unbalanced and a large proportion of the schools have only one or two classes sampled.
+
+A check on the school-specific variables shows they are consistent
+```{r schoolvars}
+str(schoolvars <- unique(subset(classvars,select=c("housepov","schoolid"))))
+```
+```{r housepovdens,fig.align='center',echo=FALSE,fig.height=3,fig.width=7}
+densityplot(~housepov,schoolvars,xlab="Fraction of households below the poverty level",scales=list(x=list(log=2)))
+densityplot(~ses,class,groups=minority,auto.key=list(columns=2,side="top",lines=TRUE,points=FALSE))
+```
