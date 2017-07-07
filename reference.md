@@ -17,6 +17,7 @@
 - [Modern Dive by Chester Ismay and Albert Y. Kim](https://ismayc.github.io/moderndiver-book/)
 
 - [Yandell Data Club](https://github.com/byandell/data_club)
-- [Profession Skills for Data Science](http://www.stat.wisc.edu/network-skills)
+- [Profession Skills for Data Science](http://www.stat.wisc.edu/network-skills) ([markdown version](skills/README.md))
 - Yandell Fall 2015 Stat 627 [Moodle](https://ay15-16.moodle.wisc.edu/prod/course/view.php?id=280) | [Syllabus](https://github.com/datascience-uwmadison/stat627/blob/master/syllabus.md) | [Weekly Schedule](https://github.com/datascience-uwmadison/stat627/blob/master/weekly.md)
+
 
