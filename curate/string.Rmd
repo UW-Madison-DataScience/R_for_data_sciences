@@ -11,6 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 - [Jenny Bryan's Data analysis 2: vectors](http://stat545.com/topics.html) (scroll down)
 - [regular expressions](regex.Rmd)
+- [stringr](http://stringr.tidyverse.org/)
 - [tidytext: Julia Silge & David Robinson](http://tidytextminig.com) | [github](https://github.com/juliasilge/tidytext) | [blog](http://juliasilge.com/blog/Tidy-Text-Mining/)
 
 Sometimes one may want to change names of columns in a table. Here is what might seem like a logical approach, but it is in fact difficult to read, awkward and repetitive, and slow.

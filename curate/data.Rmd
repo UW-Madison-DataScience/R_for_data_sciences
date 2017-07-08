@@ -134,7 +134,7 @@ If you are new to programming, this subsection might be skipped. Experienced pro
 - [Data analysis 2: vectors and files](http://stat545.com/topics.html) (scroll down to this topic)
 
 
-Atomic vectors include integers, double-precision, strings (character), logical, raw and a few others. 
+Atomic vectors include integers, double-precision, strings (character), logical and a few others. 
 
 ```{r}
 (v <- 1:6)
@@ -298,3 +298,11 @@ v + c(1,2)
 ```
 
 will return 2, 4, 4, 6, 6, etc.
+
+#### Logical
+
+While `T` and `F` work for `TRUE` and `FALSE`, don't use them. Always spell out the full word. Avoid bizarre circumstances. And avoid using these as names of objects.
+
+Logical expressions can use the shorter or longer form of AND (`&` vs `&&`) or OR (`|` vs `||`). See the `help(&)` page or [R bloggers](https://www.r-bloggers.com/logical-operators-in-r/) for full details.
+The shorter form performs elementwise comparisons in much the same way as arithmetic operators. The longer form evaluates left to right examining only the first element of each vector. Evaluation proceeds only until the result is determined. The longer form is appropriate for programming control-flow and typically preferred in if clauses.
+
