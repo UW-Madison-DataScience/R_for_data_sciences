@@ -8,7 +8,7 @@ curate data in `R`.
 
 file | contents
 ---- | --------
-[data](data.Rmd) | Working with Data in R
+[data_tables](data_tables.Rmd) | Working with data tables in R
 [curating_data_in_R](curating_data_in_R.Rmd) | curating data in R (examples)
 [applyExample](applyExample.Rmd) | examples using `for` and `apply`
 [intro_dplyr](intro_dplyr.Rmd) | sub_lesson recasting data.frame examples
