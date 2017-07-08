@@ -20,6 +20,8 @@ Chester Ismay offered these guiding principles at rstudio2017::conf
 - Don’t fence off students from the computation pool, throw them in!
 - Complete reproducibility with [bookdown](https://bookdown.org/)
 
+The primary focus is the `R` language and the `RStudio` environment. However, the reader may view this as an entry into the culture of organizing and conducting data science projects in any programming language or environment. Most of the approaches presented here arise with other languages, although it is true that some languages are better suited for certain tasks (`Python` seems to be the language of choice today for comparing DNA sequences, for instance). Some aspects will seem to be a stretch, or even downright tedious. However, software engineers have largely found that planning ahead and documenting for future reference, while time consuming now, save many headaches and reduce confusion when sharing work with others, and, most importantly, with your future self.
+
 ## Setup
 
 Be sure you have [R](https://www.r-project.org/) and [RStudio](http://www.rstudio.com)
