@@ -16,6 +16,13 @@ Learning objectives: Use [shiny](http://shiny.rstudio.com) to share results on t
 - modules for larger projects
 - [widgets](http://shiny.rstudio.com/gallery/widget-gallery.html)
 
+Joe Cheng, guru of Shiny, said the following at the rstudio2017::conf in January 2017:
+
+- Python-based interactive apps mature by added more javascript, which can be challenging; R/Shiny based interactive apps mature with tools in R, with the javascript and HTML hidden in R helper functions.
+- Shiny server mimics the 2-way client/server functionality by embedding a small server in your brower during use; that helps keep track of the messages back and forth, and protects against connection failure. Shiny server works better with https than http, as the encryption protects the shiny packets from corruption by the browser.
+
+* * * 
+
 Examples from Gallery
 
 - [Old Faithful](http://shiny.rstudio.com/gallery/faithful.html)
@@ -61,6 +68,7 @@ Debugging Shiny
 - Brian Yandell stuff
     + [Shiny Modules](https://github.com/byandell/shiny_module)
     + [corheatmap github](https://github.com/byandell/corheatmap)
+    + [qtl2shiny github](https://github.com/byandell/qtl2shiny)
 
 Advanced tools (javascript, updated URLs, widgets)
 

@@ -13,6 +13,7 @@ References
 - [GNU Make Tutorial (Karl Broman)](http://kbroman.github.io/minimal_make)
 - [LaTeX Writing Language](latex.md)
 - [Reproducible Research Tools Links](reproducible.md)
+- [Docker & Guix](docker.md) (build & run isolated containers of software)
 
 - [Going beyond R](beyondR.md)
 - <http://software-carpentry.org>
