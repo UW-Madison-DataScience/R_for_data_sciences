@@ -6,6 +6,7 @@ visualize data with annoted plots.
 - develop interactive graphics ([plotly](https://plot.ly/ggplot2/), [ggvis](http://blog.revolutionanalytics.com/2014/06/interactive-web-ready-ggplot2-style-graphics-with-ggvis.html))
 - examine related packages ([cowplot](https://github.com/wilkelab/cowplot), [GGally](https://ggobi.github.io/ggally/), [grid viewports](https://stat.ethz.ch/R-manual/R-devel/library/grid/doc/viewports.pdf))
 - create heatmaps ([pheatmap](https://github.com/raivokolde/pheatmap))
+- [network](analyze/network/README.md) observations in connected graphs
 - use [shiny](shiny.Rmd) to share results on the web
 
 file | contents
@@ -14,5 +15,6 @@ file | contents
 [shiny](shiny.Rmd) | shiny apps
 [visualize](visualize.md) | visualize with R
 [graphics](graphics.md) | visualization & graphics links
+[network](network/README.md) | network observations in connected graphs
 
 

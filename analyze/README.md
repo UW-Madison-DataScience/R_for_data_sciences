@@ -5,13 +5,11 @@ do first steps to analyze data in `R`.
 - develop annotated plots that reflect project design
 - organize linear model results with [broom](https://github.com/tidyverse/broom), [car](https://cran.r-project.org/web/packages/car/index.html), or [lsmeans](https://github.com/rvlenth/lsmeans) packages
 - clustering and trees, building networks
-- [network](analyze/network/README.md) observations in connected graphs
 
 file | contents
 ---- | --------
 [correlate](correlate.Rmd) | co-relate variables (columns) of data
 [covary](covary.Rmd) | how do columns co-vary together
-[network](network/README.md) | network observations in connected graphs
 
 Douglas Bates
 
