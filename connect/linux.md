@@ -20,6 +20,7 @@ after the designer of the first unix shell, Steve Bourne.
 -   [WikiBooks Linux Guide](http://en.wikibooks.org/wiki/Linux_Guide)
 -   [Intro to Linux](http://www.tldp.org/LDP/intro-linux/html/) ([Linux
     Documentation Project Guides](http://www.tldp.org/guides.html))
+- [WACM](http://wacm.cs.wisc.edu/): [Beginning Linux](http://wacm.cs.wisc.edu/docs/WACMExplains-IntroToLinux.pdf) | [Intermediate Linux](https://docs.google.com/document/d/1sCdWGN3WMVwVgjlKKWOA7vhW__1KGg4wU6xn1wcNNu8)
 -   [TechRadar Beginner's Guide to
     Linux](http://www.techradar.com/us/news/software/operating-systems/beginner-s-guide-to-linux-where-to-start-1066778)
 -   [LifeHacker Getting Started with

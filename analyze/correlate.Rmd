@@ -137,7 +137,7 @@ If your scatterplot (or the rectangle defined by SDs) is roughly square, the cor
 cor = 1 - width / length
 ```
 
-with `length` being the length along the green line`width` being the distance out perpendicular to the green line of the blob of data. That is, the higher the correlation, the closer points are to the SD line.
+with `length` being the length along the green line, `width` being the distance out perpendicular to the green line of the blob of data. That is, the higher the correlation, the closer points are to the SD line.
 If the relationship is decreasing, the correlation is the opposite. 
 
 ```
