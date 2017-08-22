@@ -13,7 +13,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## SQLite with R/dplyr Introduction
 
-This is an example using the `dplyr` package to access SQLite. It draws on lessons from the [UW-Madison Data Carpentry Workshop](http://uw-madison-aci.github.io/2016-06-01-uwmadison/). Other resources include the [Data Wrangling Cheat Sheet](https://www.rstudio.com/resources/cheatsheets/) and the [R/dplyr Databases Vignette](https://cran.rstudio.com/web/packages/dplyr/vignettes/databases.html).
+This is an example using the `dplyr` package to access SQLite. It draws on lessons from the [UW-Madison Data Carpentry Workshop](http://uw-madison-aci.github.io/2016-06-01-uwmadison/). Other resources include the [Data Wrangling Cheat Sheet](https://www.rstudio.com/resources/cheatsheets/) and the [Databases using dplyr](https://db.rstudio.com/dplyr/). Note that the 0.5.0 release of `dplyr`, and introduction of `dbplyr` package, dramatically changed the connections to databases. See [dplyr compatibility](http://dplyr.tidyverse.org/articles/compatibility.html) for notes on this.
+
 For more information on SQL in general see the [Lynda.com SQL Essential Training](https://www.lynda.com/SQL-tutorials/SQL-Essential-Training/139988-2.html) or the [W3 SQL Tutorial](http://www.w3schools.com/sql/).
 
 ### Motivation
@@ -35,10 +36,10 @@ The goal is to use R tools with SQL to reproduce what was done with the SQL tool
 
 ### Setup
 
-Make sure you have the package `dplyr`:
+Make sure you have the package `dplyr`. You also need the back `dbplyr` to use SQL features.
 
 ```
-install.packages("dplyr")
+install.packages("dplyr","dbplyr")
 ```
 
 Attach the package `dplyr`. 
@@ -297,7 +298,7 @@ There are a host of other dplyr `verbs`. See the references at the top of this d
 You can also use arbitrary SQL directly:
 
 ```{r}
-tbl(sql_connect, build_sql(
+tbl(sql_connect, dbplyr::build_sql(
   "SELECT species_id, COUNT(surveys.species_id)
    FROM surveys
    GROUP BY species_id
