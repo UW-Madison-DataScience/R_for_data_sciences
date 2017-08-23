@@ -16,3 +16,56 @@ knitr::opts_chunk$set(echo = TRUE)
 - `write.csv` and `readr::write_csv`
 - `readxl::read_excel`
 - `readRDS` and `saveRDS`
+
+## Reading data over the Internet
+
+One can give a URL instead of a file name as an argument to functions such as `read.csv` and `read.delim`.  Consider the data at http://www-personal.umich.edu/~bwest/classroom.csv
+```{r readclassroom}
+str(class <- read.csv("http://www-personal.umich.edu/~bwest/classroom.csv"))
+```
+
+Data sets like this use artificial numeric coding of variables that are in fact categorical.  If we summarize these data
+```{r classsummary}
+summary(class)
+```
+we get nonsensical numerical summaries of characteristics like `sex`.  We should change these variables to factors.
+```{r classtrans}
+class <- within(class,{
+  sex <- factor(sex,labels=c("M","F"))
+  minority <- factor(minority,labels=c("N","Y"))
+  classid <- factor(classid)
+  schoolid <- factor(schoolid)
+  childid <- factor(childid)
+})
+str(class)
+summary(class)
+```
+The `childid` variable is redundant but there is no harm in retaining it.
+
+For a categorical variable the summary is a frequency table.  If the number of levels is large, the ones with the largest counts are listed first.  Thus the largest number of students sampled from a single class is 10.  To look at the distribution of the counts we can apply `xtabs` twice.
+```{r tabstabs}
+xtabs(~xtabs(~classid, class))
+```
+Out of the 312 classrooms, 42 have only one student in the study, whose purpose is to determine the effects of teacher training on student performance.
+
+### Class-specific and school-specific variables
+
+Many of the variables are characteristics of teachers and should be constant within a class.  We should check that this is true.
+```{r classvars}
+str(classvars <- unique(subset(class,select=c("yearstea","mathknow","housepov","mathprep","classid","schoolid"))))
+summary(classvars)
+xtabs(~xtabs(~schoolid,classvars))
+```
+
+The important information from the summary is that there are 312 rows in this dataframe, corresponding to the 312 classes.  If any of the other variables were not constant within class we would have a greater number of rows.
+
+We also see that the number of classes sampled per school is highly unbalanced and a large proportion of the schools have only one or two classes sampled.
+
+A check on the school-specific variables shows they are consistent
+```{r schoolvars}
+str(schoolvars <- unique(subset(classvars,select=c("housepov","schoolid"))))
+```
+```{r housepovdens,fig.align='center',echo=FALSE,fig.height=3,fig.width=7}
+densityplot(~housepov,schoolvars,xlab="Fraction of households below the poverty level",scales=list(x=list(log=2)))
+densityplot(~ses,class,groups=minority,auto.key=list(columns=2,side="top",lines=TRUE,points=FALSE))
+```

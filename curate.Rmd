@@ -1,0 +1,61 @@
+---
+title: "Curate Data in R"
+author: "Brian S. Yandell"
+date: "8/23/2017"
+output: html_document
+---
+
+```{r knitr_options, echo=TRUE}
+```
+
+------------
+
+This and other lessons assume users already have some experience with R, for instance through a [Data Carpentry](http://kbroman.org/datacarpentry_R_2017-01-10/) workshop. See [References](reference.md) for useful introductory and advanced material.
+
+> ## Learning Objectives
+>
+> After completing this section, an individual will be able to curate data in `R`.
+>
+> * read, manipulate and display data summaries in concise tables
+> * work with data frames using [tidyverse](http://tidyverse.org/) tools
+> * use character string operations to clean data
+> * create functions to collapse repeated steps into one-line "verbs"
+> * save cleaned up data tables in external files
+
+------------
+
+## Read, Manipulate and Display Data
+
+* [Working with data tables in R](curate/data_tables.html)
+* [Examples using `for` and `apply`](curate/applyExample.html)
+
+## Work with Data Frames using Tidyverse tools
+
+* [sub_lesson recasting data.frame examples](curate/intro_dplyr.html)
+* [Tidyverse split-apply-combine example](curate/tidyverse.html)
+
+## Character String Operations to Clean Cata
+
+* [characters and strings](string.Rmd)
+* [regular expressions (regex)](regex.Rmd)
+
+## Create Functions to Collapse Steps
+
+[examples of functions](function.Rmd)
+
+## Save Cleaned up Data to External Files
+
+[read and write files](file.Rmd)
+
+### Challenge
+
+What is the value of `y` after doing the following?
+
+```{r, eval=FALSE}
+x <- 50
+y <- x * 2
+x <- 80
+```
+
+<!-- end challenge -->
+

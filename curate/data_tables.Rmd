@@ -57,7 +57,7 @@ Here is the basic idea. It might seem best to go a row and column at a time and 
 
 ### base R: `for` vs. `apply`
 
-- [apply examples](R_apply.Rmd)
+- [apply examples](applyExample.Rmd)
 - [Apply and For Loops in R by Elizabeth McDaniel](http://rpubs.com/lizilla93/258391) ([Rmd source](https://github.com/lizilla1993/ComBEE-UW-Madison/blob/master/Spring2017/R/ComBEE-R-Apply-Session.Rmd))
 
 To answer the frequently asked question, 'How can I avoid this loop or make it faster?': Try to use simple vectorized operations; use the family of apply functions if appropriate; initialize objects to full length when using loops; and do not repeat calculations many times if performing them just once is sufficient. Measure execution time before making changes to code, and only make changes if the efficiency gain really matters. It is better to have readable code that is free of bugs than to waste hours optimizing code to gain a fraction of a second. Sometimes, in fact, a loop will provide a clear and efficient solution to a problem (considering both time and memory use). 

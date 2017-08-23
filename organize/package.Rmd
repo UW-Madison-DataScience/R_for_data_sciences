@@ -9,6 +9,62 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+The `R` computing environment uses packages to organize objects into discrete sets. A package may have a combination of functions and datasets. The `base` package has the basic `R` tools.
+
+Packages are collections of R functions, data, and compiled code in a well-defined format. Packages are installed onto your computer with `install.packages()`, which is done once. Packages are updated with `update.packages()`. Both these operations can be done within Rstudio from the `Packages` tab in the bottom-right pane of Rstudio.
+
+The directory where packages are stored on your computer is called the library. Packages are attached from the library to your current workspace using the command `library()`. For more information see [packages vs. libraries](https://www.r-bloggers.com/packages-v-libraries-in-r/) and links therein.
+
+To see what packages are attached, use
+
+```{r sessionInfo}
+sessionInfo()
+```
+
+The other packages automatically loaded are usually `stats` and `graphics`, and some other more arkane helpers, `grDevices`, `utils`, and `methods`.
+Note that a number of packages may be `loaded via a namespace (and not attached)`, which means they are used indirectly by some other attached package. Each package has appended its version number after `-`.
+
+## The `datasets` package
+
+All `R` distributions provide the `datasets` packages which only contains sample datasets.
+In an interactive session `help` will bring up the index of help pages for the `datasets` package.
+
+This is a collection of datasets, each organized in the basic tabular data structure (rows correspond to observations, columns to variables) called a `data.frame` in `R`.
+
+```{r}
+help(package="datasets")
+```
+
+An alternative is to list the names of objects in a package. Here we use the `pattern` to just show datasets beginning with `a`.
+
+```{r lsdatasets}
+ls("package:datasets", pattern = "^a")
+```
+
+Often of more interest, list the names and a brief description of the structure
+
+```{r lsstrdatasets}
+ls.str("package:datasets", pattern = "^a")
+```
+
+When examining a new `R` package, `ls.str` is a useful way to learn about what objects are in a package. It will list both datasets and functions. However, it can still be rather verbose; it is often better to use the `Packages` tab in the bottom-right pane of Rstudio. You will find a list of objects with one-line descriptions, and help page for each object by clicking on its name. Often, packages have overview documentation toward the top.
+
+Note that in the calls to `ls` and `ls.str` the package name is given as a character string `"package:datasets"`.  This convention is also used in describing which packages are attached in a session. 
+
+## Namespaces and Indirect Access to Packages
+
+Most packages have a [namespace](http://r-pkgs.had.co.nz/namespace.html), which identifies which objects are visible to users. This is a rather arkane topic, but is important to understand for those going on to develop their own packages.
+
+Normally, one attaches a package using the `library` command, which gives direct access to all objects identified in the namespace of that package. It is possible to access objects in a package _without_ attaching the package by using the convention `packagename::objectname`. For instance, the following makes explicit reference to the package `datasets` to examine the structure of `ToothGrowth`.
+
+```{r Tooth}
+str(datasets::ToothGrowth)
+```
+
+This is not necessary for already attached packages (such as `datasets`), but can be helpful to document the source of objects. It is generally used in packages that may use a few functions or datasets from another package. For instance, attaching the `dplyr` package makes the `magrittr` pipe (`%>%`) available, without explicitly requiring the loading of this secondary package.
+
+## Miscellaneous Notes
+
 motivation for creating packages
 
 - Fritz Leisch, Kurt Hornik: [CRAN](https://cran.r-project.org/), package format

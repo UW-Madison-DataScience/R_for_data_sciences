@@ -1,0 +1,119 @@
+---
+title: "Tidyverse split-apply-combine example"
+author: "Brian S. Yandell"
+date: "8/23/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+surveys <- read.csv("http://kbroman.org/datacarp/portal_data_joined.csv",
+                    stringsAsFactors = FALSE)
+```
+
+### Split-apply-combine using dplyr
+
+```{r, message = FALSE}
+library(dplyr)    ## load the package
+```
+
+```{r}
+surveys %>%
+  filter(taxa == "Rodent",
+         !is.na(weight)) %>%
+  group_by(sex,genus) %>%
+  summarize(mean_weight = mean(weight))
+```
+
+### Split-apply-combine using dplyr and tidyr
+
+```{r}
+library(tidyr)
+```
+
+Here we use `spread()` from the `tidyr` package. This gives a more compact, if wider,
+table summary.
+
+```{r}
+surveys %>%
+  filter(taxa == "Rodent",
+         !is.na(weight)) %>%
+  group_by(sex,genus) %>%
+  summarize(mean_weight = mean(weight)) %>%
+  spread(sex, mean_weight)
+```
+
+Here is a simpler tidy example to just count how many records with weigth by genus and sex.
+
+```{r}
+surveys %>%
+  filter(taxa == "Rodent",
+         !is.na(weight)) %>%
+  count(sex, genus) %>%
+  spread(sex, n)
+```
+
+### Split-apply-combine using split, purrr and tidyr
+
+The `purrr` package works on lists (which includes data frames), giving great generality to what objects might be in the lists. Below we show two examples.
+
+```{r}
+library(purrr)
+```
+
+In the first example, for each genus, we fit a linear model with `lm()` and extract the `"r.squared"` element from the `summary()` of the fit. Note the use of `split()` to split the data frame into a list of data frames, one per genus. The `map()` function from `purrr` returns a list, while the `map_dbl()` function returns a vector.
+
+```{r}
+surveys %>%
+  filter(taxa == "Rodent",
+         !is.na(weight)) %>%
+  select(genus,weight,sex) %>%
+  split(.$genus) %>%
+  map(~ lm(weight ~ sex, data=.)) %>%
+  map(summary) %>%
+  map_dbl("r.squared")
+```
+
+Note that for `Spermophilus`, the $R^2$ of 1 reflects that there are only two records, one male and one female (see table above in `tidyr` section).
+
+There were three calls to `purrr` functions. The first `map(~ lm())` call creates a list of `"lm"` objects; the second `map(summary)` call creates a list of `"summary.lm"` objects; the third `map_dbl()` creates a vector of double-precision values.
+
+The following more complicated example takes the `coef()` of the `lm()` fits to get the estimates of coefficients. These coefficients have to be converted into a data frame,
+and then the data frames are bound together using `bind_rows()`.
+
+```{r}
+surveys %>%
+  filter(taxa == "Rodent",
+         !is.na(weight)) %>%
+  select(genus,weight,sex) %>%
+  split(list(.$genus)) %>%
+  map(~ lm(weight ~ sex, data=.)) %>%
+  map(coef) %>%
+  map(function(x) data.frame(level = names(x), estimate = x,
+                             stringsAsFactors = FALSE)) %>%
+  bind_rows(.id = "genus")
+```
+
+The following is the same idea as above, but using `summary()` rather than `coef()`. We also `spread()` the data for a more compact table.
+
+```{r}
+surveys %>%
+  filter(taxa == "Rodent",
+         !is.na(weight)) %>%
+  select(genus,weight,sex) %>%
+  split(list(.$genus)) %>%
+  map(~ lm(weight ~ sex, data=.)) %>%
+  map(summary) %>%
+  map(function(x) {
+    out <- as.data.frame(x$coefficients[,1, drop = FALSE])
+    out$level <- row.names(out)
+    out[, 2:1]
+    }) %>%
+  bind_rows(.id = "genus") %>%
+  spread(level, Estimate)
+```
+
