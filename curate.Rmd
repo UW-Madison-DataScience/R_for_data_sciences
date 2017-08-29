@@ -36,16 +36,16 @@ This and other lessons assume users already have some experience with R, for ins
 
 ## Character String Operations to Clean Cata
 
-* [characters and strings](string.Rmd)
-* [regular expressions (regex)](regex.Rmd)
+* [characters and strings](curate/string.html)
+* [regular expressions (regex)](curate/regex.html)
 
 ## Create Functions to Collapse Steps
 
-[examples of functions](function.Rmd)
+[examples of functions](curate/function.html)
 
 ## Save Cleaned up Data to External Files
 
-[read and write files](file.Rmd)
+[read and write files](curate/file.html)
 
 ### Challenge
 

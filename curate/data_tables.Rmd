@@ -24,7 +24,7 @@ The basic structure in `R` is a vector, here is a vector of the numbers 1 throug
 > ## Challenge
 >
 > Go through the Data Carpentry or Jenny Bryan introduction to learn more about data basics.
-> Read through Doub Bates notes to fill in further gaps.
+> Read through Doug Bates notes to fill in further gaps.
 
 - [R Introduction from Data Carpentry](http://kbroman.org/datacarpentry_R_2017-01-10/01-intro-to-R.html)
 - [R basics from Jenny Bryan](http://stat545.com/block002_hello-r-workspace-wd-project.html)

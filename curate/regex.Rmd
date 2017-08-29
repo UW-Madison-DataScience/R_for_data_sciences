@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Drew’s example (using `gsub`): 
 
-Searching through these ugly column headings in data frame called x:
+Searching through these ugly column headings in data frame called `x`:
 
 ```
 Raw Data (595) 1 - 0 h  
@@ -30,16 +30,84 @@ Raw Data (595) 13 - 2 h
 Raw Data (595) 16 - 2 h 30 min 
 ```
 
+```{r}
+x <- read.delim("x.txt",header=F,stringsAsFactors = FALSE)
+```
+
 I used the following `gsub()` statement (within an `apply()` function, but that’s not important here) on data frame `x`:
 
-```
-gsub('\\.*(\\d*) h (\\d*).*', '\\1.0\\2',x)
+```{r}
+gsub('\\.*(\\d*) h (\\d*).*', '\\1.0\\2',x[[1]])
 ```
 
 (On a second look, it’s possible the initial `\\.*` isn’t necessary, but as always, test your regex’s out before executing them)
 
 perl example
 
+```{r}
+gsub('\\.*(\\d*)\\sh\\s(\\d*).*', '\\1.0\\2',x[[1]], perl=T)
 ```
-gsub('\\.*(\\d*)\\sh\\s(\\d*).*', '\\1.0\\2',x, perl=T)
+
+`\\s` means “space” which would also match `\\t` and `\\n`  
+`\\d{2}` means 2 digits  
+`[5-9]  [a-z]  \W  \D`
+
+And it catches the following substrings (highlighted in cyan):
+
 ```
+Raw Data (595) 1 - 0 h  
+Raw Data (595) 5 - 0 h 30 min 
+Raw Data (595) 7 - 1 h  
+Raw Data (595) 10 - 1 h 30 min 
+Raw Data (595) 13 - 2 h  
+Raw Data (595) 16 - 2 h 30 min 
+```
+
+```{r}
+d <- data.frame(c("Raw Data (595) 1 - 0 h",  
+  "Raw Data (595) 5 - 0 h 30 min",
+  "Raw Data (595) 7 - 1 h",
+  "Raw Data (595) 10 - 1 h 30 min",
+  "Raw Data (595) 13 - 2 h",
+  "Raw Data (595) 16 - 2 h 30 min" ))
+class(d)
+dim(d)
+dl <- as.list(d)
+```
+
+```
+[1] 6 1
+[1] "data.frame"
+```
+Perl =T version
+
+```{r}
+gsub('\\.*(\\d*)\\sh\\s(\\d*).*', '\\1.0\\2',d, perl=T)
+gsub('\\.*(\\d*)\\sh\\s(\\d*).*', '\\1.0\\2',dl, perl=T)
+```
+
+```
+[1] "c(1, 5, 6, 2, 3, 4)"
+[1] "c(1, 5, 6, 2, 3, 4)"
+```
+
+Non Perl version:
+
+```{r}
+gsub('\\.*(\\d*) h (\\d*).*', '\\1.0\\2',d)
+gsub('\\.*(\\d*) h (\\d*).*', '\\1.0\\2',dl)
+```
+
+```
+[1] "c(1, 5, 6, 2, 3, 4)"
+[1] "c(1, 5, 6, 2, 3, 4)"
+```
+
+But it’s more complicated than that….
+
+```{r eval=FALSE}
+timePoints <- apply(timePoints, 2,
+                    function(x) gsub('\\.*(\\d*) h (\\d*).*', '\\1.0\\2',
+                                     x[[1]]))
+```
+
