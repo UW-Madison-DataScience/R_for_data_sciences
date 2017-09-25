@@ -8,11 +8,12 @@ curate data in `R`.
 
 file | contents
 ---- | --------
-[data_tables](data_tables.Rmd) | Working with data tables in R
-[curating_data_in_R](curating_data_in_R.Rmd) | curating data in R (examples)
-[applyExample](applyExample.Rmd) | examples using `for` and `apply`
+[data_tables](data_tables.html) | Working with data tables in R
+[applyExample](applyExample.Rmd) | Examples using `for` and `apply`
 [intro_dplyr](intro_dplyr.Rmd) | sub_lesson recasting data.frame examples
+[tidyverse](tidyverse.html) | Tidyverse split-apply-combine example
+[purrr](purrr.html) | another example using `map` & `transpose`
 [string](string.Rmd) | characters and strings
-[function](function.Rmd) | examples of functions
 [regex](regex.Rmd) | regular expressions
+[function](function.Rmd) | examples of functions
 [file](file.Rmd) | read and write files

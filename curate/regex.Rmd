@@ -103,11 +103,24 @@ gsub('\\.*(\\d*) h (\\d*).*', '\\1.0\\2',dl)
 [1] "c(1, 5, 6, 2, 3, 4)"
 ```
 
-But it’s more complicated than that….
+Drew Doering used this in the context of converting time values in the format “X h Y min” to a decimal hour format, to facilitate downstream analysis/plotting. You can see that specific command in-context here on line 49: <https://github.com/dtdoering/grofitr/blob/b70f82755e83ad27b4ebe07c9e78b3cc36159351/findRates.R>
 
-```{r eval=FALSE}
-timePoints <- apply(timePoints, 2,
-                    function(x) gsub('\\.*(\\d*) h (\\d*).*', '\\1.0\\2',
-                                     x[[1]]))
+However, playing with this in my own instance of RStudio, it doesn’t seem to be doing what I wanted it to do with that specific command. Here is a reproducible example you can use to replace that last command at the bottom:
+
+```{r}
+timePoints <- c("Raw Data (595) 1 - 0 h",
+                "Raw Data (595) 5 - 0 h 30 min",
+                "Raw Data (595) 7 - 1 h", 
+                "Raw Data (595) 10 - 1 h 30 min", 
+                "Raw Data (595) 13 - 2 h", 
+                "Raw Data (595) 16 - 2 h 30 min",
+                "Raw Data (595) 50 - 21 h 30 min")
+
+sapply(timePoints,
+       function(x) gsub('.* - (\\d*) h( (\\d*).*)?', 
+                        '\\1.0\\3',
+                        x, perl = F), 
+       USE.NAMES = FALSE)
 ```
 
+Drew would then go on to do some string operations and arithmetic to divide the right side of the decimal by 60.

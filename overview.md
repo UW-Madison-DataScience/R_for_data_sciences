@@ -25,7 +25,7 @@ The primary focus is the `R` language and the `RStudio` environment. However, th
 ## Setup
 
 Be sure you have [R](https://www.r-project.org/) and [RStudio](http://www.rstudio.com)
-installed on your machine. See for instance [Data Carpentry R](http://kbroman.org/datacarpentry_R_2017-01-10/) (bottom part of page).
+installed on your machine. See for instance [Data Carpentry R](http://kbroman.org/datacarpentry_R_2017-01-10/) (bottom part of page); in fact, please go through the entire second day on R.
 It would also be good to have [tidyverse](http://tidyverse.org) installed using the console pane:
 
 ```

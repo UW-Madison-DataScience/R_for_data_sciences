@@ -47,15 +47,3 @@ This and other lessons assume users already have some experience with R, for ins
 
 [read and write files](curate/file.html)
 
-### Challenge
-
-What is the value of `y` after doing the following?
-
-```{r, eval=FALSE}
-x <- 50
-y <- x * 2
-x <- 80
-```
-
-<!-- end challenge -->
-

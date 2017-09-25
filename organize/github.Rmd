@@ -21,6 +21,7 @@ While GitHub can be used for any type of documents, the `RStudio` folks have mad
 - [ProGit Book by Scott Chacon and Ben Straub](https://git-scm.com/book/en/v2)
 - [Getting Started With Git (UCSC Genome Browser)](http://genomewiki.ucsc.edu/index.php/Getting_Started_With_Git)
 - [Good resources for learning git and github](https://help.github.com/articles/good-resources-for-learning-git-and-github/)
+- [Git for humans](https://speakerdeck.com/alicebartlett/git-for-humans)
 
 ## Github for Course Organization
  

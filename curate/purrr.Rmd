@@ -1,0 +1,110 @@
+---
+title: "purrr package"
+author: "Brian S. Yandell"
+date: "9/18/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The `dplyr` package acts on data frames, `filter`ing rows and `select`ing columns as one would in a database. The `purrr` package acts on lists, including data frames. The cool thing is that the lists may contain rather complicated objects. Below is a made-up example to illustrate some features.
+
+```{r message=FALSE}
+library(purrr)
+library(dplyr)
+library(tidyr)
+```
+
+
+Let's create some fake data. Here `x` is random and `y` equals column number + `x` + noise.
+
+```{r}
+nc <- 5
+nr <- 10
+```
+
+```{r}
+x <- as.list(seq_len(nc))
+```
+
+
+```{r}
+x <- as.data.frame(matrix(rnorm(nr * nc), nr, nc))
+x <- as.data.frame(x)
+```
+
+```{r}
+y <- t(seq_len(nc) + t(x) * seq_len(nc)) + 
+  matrix(rnorm(nr * nc,, 0.001), nr, nc)
+y <- as.data.frame(y)
+```
+
+Now we want to run a regress of each column of `x` on each column of `y` and report out the coefficients. This could be done in a loop, but let's instead imagine what we would do with a single column.
+
+```{r}
+lm_coef <- function(x1, y1) {
+  dat <- data.frame(x = x1, y = y1)
+  coef(lm(y ~ x, dat))
+}
+```
+
+```{r}
+lm_coef(x[,1], y[,1])
+```
+
+We want to combine `x` and `y` into one list. We first make a list of lists, then transpoe it.
+
+```{r}
+xy <- list(x = as.list(x), y = as.list(y))
+str(xy)
+```
+
+```{r}
+xy <- xy %>%
+  transpose
+str(xy)
+```
+
+```{r}
+xy %>% 
+  map(function(dat) coef(lm(y~x, dat)))
+```
+
+This can also be done in two steps. At the end, we organize data a bit.
+
+
+```{r}
+xy %>% 
+  map(function(dat) lm(y~x, dat)) %>%
+  map(coef) %>%
+  as.data.frame %>%
+  t
+```
+
+## Redo with dplyr
+
+Of course all the above can be done readily with `dplyr` and `tidyr` using `group_by` and `do`, as shown below. However, two things are useful to consider:
+
+* While `summarize` works for single value operations, you must use `do` for multiple value operations. It is challenging to get `do` correct, as it must return a one-row data frame.
+* The `purrr` verbs `map` and `transpose` do not require the lists to be the same length or configuration. Thus, they can be used in a variety of settings where `dplyr`, working on data frames, cannot.
+
+```{r}
+xx <- x %>%
+  gather(var, xval)
+yy <- y %>%
+  gather(var, yval)
+xx$yval <- yy$yval
+```
+
+
+```{r}
+xx %>% 
+  group_by(var) %>%
+  do(
+    as.data.frame(
+    t(
+      coef(
+        lm(yval ~ xval, .)))))
+```
