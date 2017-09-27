@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-The `dplyr` package acts on data frames, `filter`ing rows and `select`ing columns as one would in a database. The `purrr` package acts on lists, including data frames. The cool thing is that the lists may contain rather complicated objects. Below is a made-up example to illustrate some features.
+The `dplyr` package acts on data frames, `filter`ing rows and `select`ing columns as one would in a database. The `purrr` package acts on lists, including data frames. The cool thing is that the lists may contain rather complicated objects. There is now a [purrr cheatsheat](https://github.com/rstudio/cheatsheets/raw/master/purrr.pdf) Below is a made-up example to illustrate some features.
 
 ```{r message=FALSE}
 library(purrr)
