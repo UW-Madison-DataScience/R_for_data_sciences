@@ -2,7 +2,8 @@
 
 The project is for individuals in teams who are using, or planning to use, [R](http://r-project.org) to address problems in the data sciences. This assumes a first course in [Data Carpentry](http://datacarpentry.org) or some similar introduction to working with data using computer tools. However, for those who have not had that, links to appropriate material will be provided along the way.
 
-This is not fully laid out as a course, although it could be used as such. Much of the material has been tried out in various courses and training venues. There are many references out to course and research material of others so that teams can build on their experience. That, in fact, is how any science progresses.
+This is not fully laid out as a course, although it could be used as such. Much of the material has been tried out in various courses and training venues. There are many references out to course and research material of others so that teams can build on their experience. That, in fact, is how any science progresses. A web version is at 
+<http://www.stat.wisc.edu/~yandell/R_for_data_sciences>.
 
 The [syllabus](syllabus.html) provides the broad organization. Material is organized into verb folders roughly based on this syllabus. 
 
