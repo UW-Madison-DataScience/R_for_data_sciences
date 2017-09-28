@@ -1,0 +1,113 @@
+---
+title: "Species using dplyr and purrr"
+author: "Brian S. Yandell"
+date: "9/27/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+We are going to use the species data from data carpentry to explore with the `dplyr`,
+`tidyr` and `purrr` packages. The data are available at <http://kbroman.org/datacarp/portal_data_joined.csv>. Here we attach the packages we will use with the `library` command.
+
+```{r message=FALSE}
+library(dplyr)
+library(tidyr)
+library(purrr)
+library(readr)
+```
+
+
+```{r}
+surveys <- read_csv("../data/surveys.csv")
+```
+
+```{r}
+surveys %>%
+  filter(!(is.na(hindfoot_length) & is.na(weight)),
+         !is.na(sex)) %>%
+  group_by(species_id, sex) %>%
+  summarize(hflen = mean(hindfoot_length, na.rm = TRUE),
+            wt = mean(weight, na.rm = TRUE))
+```
+
+Here is a spread table for one of the traits.
+
+```{r}
+surveys %>%
+  filter(!(is.na(hindfoot_length) & is.na(weight)),
+         !is.na(sex)) %>%
+  group_by(species_id, sex) %>%
+  summarize(hflen = mean(hindfoot_length, na.rm = TRUE)) %>%
+  spread(sex, hflen)
+```
+
+How would you do this for two traits? Turns out this is more challenging, and depends on what you want to compare. The simplest thing is to `arrange` or `subset` the earlier table by `sex`. If you want four columns on one line, for `sex` and the two traits, you will have to be creative. What you want to do is avoid typing the trait names or the sexes if you can. I don't have an easy solution!
+
+The following gives us a list of 2-trait tables by sex. Notice the use of `map` from package `purrr` to act separately on each `sex`.
+
+```{r}
+tmp <- surveys %>%
+  filter(!(is.na(hindfoot_length) & is.na(weight)),
+         !is.na(sex))
+tmp <- split(tmp, tmp$sex)
+tmp2 <- map(tmp, function(x) {
+  x %>% 
+    group_by(species_id, sex) %>%
+    summarize(hflen = mean(hindfoot_length, na.rm = TRUE),
+            wt = mean(weight, na.rm = TRUE))
+})
+tmp2
+```
+
+What about this? It gives small tables by species. The challenge is that species that do not have records for both sexes will mess up any easy combining.
+
+```{r}
+tmp <- surveys %>%
+  filter(!(is.na(hindfoot_length) & is.na(weight)),
+         !is.na(sex))
+tmp <- split(tmp, tmp$species_id)
+tmp2 <- map(tmp, function(x) {
+  x %>% 
+    select(-species_id) %>%
+    group_by(sex) %>%
+    summarize(hflen = mean(hindfoot_length, na.rm = TRUE),
+            wt = mean(weight, na.rm = TRUE))
+})
+tmp2
+```
+
+
+## Bringing in species information
+
+Suppose you want to bring in taxonomic information from another file. While you can use `left_join(surveys, species)` to create a larger table, what can we do keeping the two tables separate? This can be useful if both tables are large, or if they are configured in different ways. Here 
+
+```{r}
+species <- read_csv("../data/species.csv")
+```
+
+Here we want summaries by `genus`. Notice the use of `map_df` from `purrr` to get results as a data frame.
+
+```{r}
+species_taxa <- split(species, species$genus)
+```
+
+```{r}
+map_df(species_taxa,
+       function(x, surveys) {
+         # Identify species in this taxa
+         taxa_sp <- x$species_id
+         surveys %>%
+           filter(!(is.na(hindfoot_length) & is.na(weight)),
+                  !is.na(sex),
+           species_id %in% taxa_sp) %>%
+           group_by(sex) %>%
+           summarize(hflen = mean(hindfoot_length, na.rm = TRUE),
+                     wt = mean(weight, na.rm = TRUE))
+         },
+       surveys,
+       .id = "genus")
+```
+

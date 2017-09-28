@@ -13,6 +13,7 @@ file | contents
 [intro_dplyr](intro_dplyr.Rmd) | sub_lesson recasting data.frame examples
 [tidyverse](tidyverse.html) | Tidyverse split-apply-combine example
 [purrr](purrr.html) | another example using `map` & `transpose`
+[species](species.html) | `dplyr`, `tidyr` and `purrr` ideas with `portal_mammals` data
 [string](string.Rmd) | characters and strings
 [regex](regex.Rmd) | regular expressions
 [function](function.Rmd) | examples of functions

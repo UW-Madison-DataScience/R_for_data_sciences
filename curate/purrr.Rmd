@@ -108,3 +108,36 @@ xx %>%
       coef(
         lm(yval ~ xval, .)))))
 ```
+
+## A more complicated example
+
+This example can be found in the [hotspot.R](https://github.com/byandell/qtl2shiny/blob/master/R/hotspot.R) file of package [qtl2shiny](https://github.com/byandell/qtl2shiny).
+
+We start with two objects -- `chr_pos` has positions within each chromosome, `peaks` has information about what traits have peaks where on each chromosome -- that are lists by chromosome. [The `peaks` object is turned into a list by use of `split`.] We transpose a "list of lists" so that `out_chr` is also a list by chromosome, having elements from the two objects.
+
+```{r eval = FALSE}
+out_chr <- purrr::transpose(list(pos = chr_pos, 
+                                   peaks = split(peaks, peaks$chr)))
+```
+
+Now we create a new object `out_peaks` by counting peaks at each position along each chromosome. The `map` function acts across the list indexed by chromosome.  Notice that the call to `peaks_type`, done for each chromosome, uses elements `x$pos` and `x$peaks` from each element of `out_chr`. Recall the `pos` and `peaks` objects have rather different shapes.
+
+```{r eval = FALSE}
+out_peaks <- purrr::map(out_chr,
+                        function(x, peak_window) 
+                          peaks_type(x$pos, x$peaks, peak_window),
+                        peak_window)
+```
+
+The routine `peaks_type` first `split`s the `peaks` by `pheno_type`, then `map`s a function `outer_window` (not shown here) for each element of `peaks_by_type`.
+
+```{r eval=FALSE}
+peaks_by_type <- split(peaks, peaks$pheno_type)
+out <- purrr::map(peaks_by_type,
+                  outer_window,
+                  posi, peak_window)
+```
+
+Later on, `peaks_type` uses `map` again for another summary.
+
+The point here is not to follow the details, but to notice how `map` can be used to isolate thinking about a particular task. Then you can concentrate on solving that task without worrying about a bunch of indexing and looping.
