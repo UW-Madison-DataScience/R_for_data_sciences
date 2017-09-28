@@ -7,12 +7,12 @@ This is not fully laid out as a course, although it could be used as such. Much 
 
 The [syllabus](syllabus.html) provides the broad organization. Material is organized into verb folders roughly based on this syllabus. 
 
-- [curate](curate/README.html) data structures
-- [visualize](visualize/README.html) data relationships
-- [organize](organize/README.html) data methods and documentation
-- [analyze](analyze/README.html) data with linear and other models
-- [profile](profile/README.html) code for efficiency and error checking
-- [connect](connect/README.html) with other data science tools beyond R
+- [curate](curate) data structures
+- [visualize](visualize) data relationships
+- [organize](organize) data methods and documentation
+- [analyze](analyze) data with linear and other models
+- [profile](profile) code for efficiency and error checking
+- [connect](connect) with other data science tools beyond R
 
 
 Other material in this directory:

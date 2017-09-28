@@ -116,6 +116,8 @@ Some use the older [reshape2](https://github.com/hadley/reshape), which includes
 
 ### purrr
 
+- [purrr example using `map` & `transpose`](purrr.html)
+- [more tidyverse on `portal_mammals` data](species.html)
 - [purrr Tutorial by Jenny Bryan](https://jennybc.github.io/purrr-tutorial/) | [github](https://github.com/jennybc/purrr-tutorial) | [repurrsive](https://github.com/jennybc/repurrrsive)
 - [purrr](http://purrr.tidyverse.org/) | [blog entry](https://blog.rstudio.org/2016/01/06/purrr-0-2-0/) | [bloggers entry](https://www.r-bloggers.com/using-purrr-with-dplyr/)
 - [Iteration chapter of R for Data Science](http://r4ds.had.co.nz/iteration.html)

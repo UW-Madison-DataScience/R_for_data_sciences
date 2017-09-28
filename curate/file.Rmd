@@ -65,7 +65,14 @@ A check on the school-specific variables shows they are consistent
 ```{r schoolvars}
 str(schoolvars <- unique(subset(classvars,select=c("housepov","schoolid"))))
 ```
+
 ```{r housepovdens,fig.align='center',echo=FALSE,fig.height=3,fig.width=7}
-densityplot(~housepov,schoolvars,xlab="Fraction of households below the poverty level",scales=list(x=list(log=2)))
-densityplot(~ses,class,groups=minority,auto.key=list(columns=2,side="top",lines=TRUE,points=FALSE))
+library(ggplot2)
+ggplot(schoolvars, aes(housepov)) +
+  geom_density() +
+  xlab("Fraction of households below the poverty level") +
+  scale_x_log10()
+ggplot(class, aes(ses, col = minority)) +
+  geom_density() +
+  geom_rug()
 ```

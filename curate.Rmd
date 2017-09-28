@@ -33,6 +33,8 @@ This and other lessons assume users already have some experience with R, for ins
 
 * [sub_lesson recasting data.frame examples](curate/intro_dplyr.html)
 * [Tidyverse split-apply-combine example](curate/tidyverse.html)
+* [purrr example using `map` & `transpose`](purrr.html)
+* [more tidyverse on `portal_mammals` data](species.html)
 
 ## Character String Operations to Clean Cata
 
