@@ -31,6 +31,7 @@ While GitHub can be used for any type of documents, the `RStudio` folks have mad
     + [CS50 at Harvard, automated tests, and portfolios](https://github.com/blog/2322-how-cs50-at-harvard-uses-github-to-teach-computer-science)
     + [Real-time feedback for students using continuous integration tools](https://github.com/blog/2324-real-time-feedback-for-students-using-continuous-integration-tools)
     + [Student-created portfolios using GitHub Pages](https://education.github.community/t/who-uses-github-pages-portfolios-peer-learning/9365)
+- [COMBEE Git Workshop](https://combee-uw-madison.github.io/2017-09-29-git-workshop/setup/)
     
 ## Using Github for Pull Requests
 
