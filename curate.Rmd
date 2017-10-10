@@ -26,26 +26,26 @@ This and other lessons assume users already have some experience with R, for ins
 
 ## Read, Manipulate and Display Data
 
-* [Working with data tables in R](curate/data_tables.html)
-* [Examples using `for` and `apply`](curate/applyExample.html)
+* [Working with data tables in R](curate/data_tables.Rmd)
+* [Examples using `for` and `apply`](curate/applyExample.Rmd)
 
 ## Work with Data Frames using Tidyverse tools
 
-* [sub_lesson recasting data.frame examples](curate/intro_dplyr.html)
-* [Tidyverse split-apply-combine example](curate/tidyverse.html)
-* [purrr example using `map` & `transpose`](purrr.html)
-* [more tidyverse on `portal_mammals` data](species.html)
+* [sub_lesson recasting data.frame examples](curate/intro_dplyr.Rmd)
+* [Tidyverse split-apply-combine example](curate/tidyverse.Rmd)
+* [purrr example using `map` & `transpose`](purrr.Rmd)
+* [more tidyverse on `portal_mammals` data](species.Rmd)
 
 ## Character String Operations to Clean Cata
 
-* [characters and strings](curate/string.html)
-* [regular expressions (regex)](curate/regex.html)
+* [characters and strings](curate/string.Rmd)
+* [regular expressions (regex)](curate/regex.Rmd)
 
 ## Create Functions to Collapse Steps
 
-[examples of functions](curate/function.html)
+[examples of functions](curate/function.Rmd)
 
 ## Save Cleaned up Data to External Files
 
-[read and write files](curate/file.html)
+[read and write files](curate/file.Rmd)
 
