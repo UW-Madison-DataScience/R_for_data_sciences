@@ -19,12 +19,12 @@ Other material in this directory:
 
 item          | contents
 ------------- | -----------------
-[overview](overview.html) | Overview of R Material
-[reference](reference.html) | list of references
-[repositories](repositories.html) | list of data repositories
-[learnR](learnR.html) | R Language Tips & Tricks
-[background](background.html) | background material on `R` and data science
-[Bates](Bates.html) | index of teaching material developed by Douglas Bates
+[overview](overview.md) | Overview of R Material
+[reference](reference.md) | list of references
+[repositories](repositories.md) | list of data repositories
+[learnR](learnR.md) | R Language Tips & Tricks
+[background](background.md) | background material on `R` and data science
+[Bates](Bates.md) | index of teaching material developed by Douglas Bates
 `data` | folder with local data
 [LICENSE](LICENSE) | fair use license
 

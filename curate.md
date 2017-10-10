@@ -5,9 +5,6 @@ date: "8/23/2017"
 output: html_document
 ---
 
-```{r knitr_options, echo=TRUE}
-```
-
 ------------
 
 This and other lessons assume users already have some experience with R, for instance through a [Data Carpentry](http://kbroman.org/datacarpentry_R_2017-01-10/) workshop. See [References](reference.md) for useful introductory and advanced material.
@@ -33,8 +30,8 @@ This and other lessons assume users already have some experience with R, for ins
 
 * [sub_lesson recasting data.frame examples](curate/intro_dplyr.Rmd)
 * [Tidyverse split-apply-combine example](curate/tidyverse.Rmd)
-* [purrr example using `map` & `transpose`](purrr.Rmd)
-* [more tidyverse on `portal_mammals` data](species.Rmd)
+* [purrr example using `map` & `transpose`](curate/purrr.Rmd)
+* [more tidyverse on `portal_mammals` data](curate/species.Rmd)
 
 ## Character String Operations to Clean Cata
 

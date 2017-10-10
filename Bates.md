@@ -5,10 +5,6 @@ date: "7/3/2017"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 This document connects to [Douglas Bates' GitHub notes for R used in Stat 692](https://github.com/dmbates/stat692).
 These notes were used in Fall 2014 and Fall 2015 (as Stat 627) in a course taught jointly with Brian Yandell.
 
