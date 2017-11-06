@@ -5,6 +5,8 @@ date: "7/5/2017"
 output: html_document
 ---
 
+Rmarkdown works best on a machine with the latest versions of [R](https://cran.r-project.org/) and [Rstudio](https://www.rstudio.com/products/rstudio/download/#download). Fire up Rstudio and click the green circle with white plus (upper left corner) and try creating an "R Markdown" (HTML format) or "R Notebook" page. You might be asked to install some packages at that point – do it. If you are adventurous, try clicking the "Preview" or "Knit" icon at the top of the page to see what is produced. Again, you may be asked to install some packages, which you should. There is a "Markdown Quick Reference" under the "Help" tab at top of page.
+
 - [Reproducible Reports with Rmarkdown from Data Carpentry](http://kbroman.org/datacarpentry_R_2017-01-10/04-rmarkdown.html)
 - [Rmarkdown from RStudio](http://rmarkdown.rstudio.com/)
 - [Rmarkdown Gallery](http://rmarkdown.rstudio.com/gallery.html) & [Rmarkdown Articles](http://rmarkdown.rstudio.com/articles.html) 
