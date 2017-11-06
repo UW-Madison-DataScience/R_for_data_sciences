@@ -16,8 +16,8 @@ file | contents
 [Rmarkdown](Rmarkdown.md) | Rmarkdown Report Writing
 [RmarkdownExample](RmarkdownExample.Rmd) | Rmarkdown Example
 [function](function.Rmd) | examples of functions
-[github](github.Rmd) | GitHub Version Control
-[database](database.Rmd) | create and manage external databases
+[github](github.md) | GitHub Version Control
+[database](database.md) | create and manage external databases
 [SQLiteDplyr](SQLiteDplyr.Rmd) | lesson using dplyr with SQLite
 [writing](writing.md) | Communication & Writing
 

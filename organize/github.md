@@ -5,10 +5,6 @@ date: "7/5/2017"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 GitHub seems to be the best version control system. It was designed by Linus Torvalds to solve a problem of sharing ideas in the development of Linux (see [TED interview with Linus Torvalds](https://www.ted.com/talks/linus_torvalds_the_mind_behind_linux)).
 While GitHub can be used for any type of documents, the `RStudio` folks have made elegant and easy connections.
 

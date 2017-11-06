@@ -5,10 +5,6 @@ date: "7/5/2017"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 - [Reproducible Reports with Rmarkdown from Data Carpentry](http://kbroman.org/datacarpentry_R_2017-01-10/04-rmarkdown.html)
 - [Rmarkdown from RStudio](http://rmarkdown.rstudio.com/)
 - [Rmarkdown Gallery](http://rmarkdown.rstudio.com/gallery.html) & [Rmarkdown Articles](http://rmarkdown.rstudio.com/articles.html) 
