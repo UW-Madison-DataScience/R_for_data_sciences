@@ -5,7 +5,7 @@ organize data tasks in a variety of ways.
 - create [functions](function.Rmd) to collapse repeated steps into one-line "verbs"
 - use [git and github](http://happygitwithr.com/) to keep track of code and document changes with version control
 - organize documentation and data tasks into [packages](package.Rmd) (`R` libraries) to share
-- create and manage external [database](database.Rmd) with `R` objects
+- create and manage external [database](database.md) with `R` objects
     + see [databases](https://db.rstudio.com/)
     + understand use and limitations of CSV and XLS file formats
     + understand and use SQLite in `R`; learn about DBI, dbplyr
@@ -13,7 +13,7 @@ organize data tasks in a variety of ways.
     
 file | contents
 ---- | --------
-[Rmarkdown](Rmarkdown.Rmd) | Rmarkdown Report Writing
+[Rmarkdown](Rmarkdown.md) | Rmarkdown Report Writing
 [RmarkdownExample](RmarkdownExample.Rmd) | Rmarkdown Example
 [function](function.Rmd) | examples of functions
 [github](github.Rmd) | GitHub Version Control

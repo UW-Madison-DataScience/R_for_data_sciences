@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 - see [databases](https://db.rstudio.com/)
 - understand use and limitations of CSV and XLS file formats
-- understand and use SQLite in `R`; learn about DBI, dbplyr
+- understand and use [SQLite](SQLiteDplyr.Rmd) in `R`; learn about DBI, dbplyr
 - understand and use [RDS](http://www.fromthebottomoftheheap.net/2012/04/01/saving-and-loading-r-objects/) and [feather](https://github.com/wesm/feather) formats
 
 References
