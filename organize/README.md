@@ -1,9 +1,10 @@
 **Learning Objectives:** After completing this material, an individual will be able to
-organize data in a variety of ways.
+organize data tasks in a variety of ways.
 
 - document ongoing work with [R Markdown](http://rmarkdown.rstudio.com/)
+- create [functions](function.Rmd) to collapse repeated steps into one-line "verbs"
 - use [git and github](http://happygitwithr.com/) to keep track of code and document changes with version control
-- organize functions, documentation and data into packages (`R` libraries) to share
+- organize documentation and data tasks into [packages](package.Rmd) (`R` libraries) to share
 - create and manage external [database](database.Rmd) with `R` objects
     + see [databases](https://db.rstudio.com/)
     + understand use and limitations of CSV and XLS file formats
@@ -14,6 +15,7 @@ file | contents
 ---- | --------
 [Rmarkdown](Rmarkdown.Rmd) | Rmarkdown Report Writing
 [RmarkdownExample](RmarkdownExample.Rmd) | Rmarkdown Example
+[function](function.Rmd) | examples of functions
 [github](github.Rmd) | GitHub Version Control
 [database](database.Rmd) | create and manage external databases
 [SQLiteDplyr](SQLiteDplyr.Rmd) | lesson using dplyr with SQLite

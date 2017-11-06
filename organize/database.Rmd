@@ -19,3 +19,4 @@ knitr::opts_chunk$set(echo = TRUE)
 References
 
 - [Database basics - dplyr and DBI](https://shiny.rstudio.com/articles/overview.html) | [Intro to dbplyr](http://dbplyr.tidyverse.org/articles/dbplyr.html) | [dplyr and pool](https://shiny.rstudio.com/articles/pool-dplyr.html)
+- [Why learn about databases (UC Berkeley)](https://www.stat.berkeley.edu/~statcur/Workshop2/Presentations/RDBMS.pdf)

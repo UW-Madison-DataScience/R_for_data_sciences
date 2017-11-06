@@ -3,7 +3,6 @@ curate data in `R`.
 
 - read, manipulate and display data summaries in concise tables
 - work with data frames using [tidyverse](http://tidyverse.org/) tools
-- create functions to collapse repeated steps into one-line "verbs"
 - write cleaned up data table out in CSV format
 
 file | contents
@@ -16,5 +15,4 @@ file | contents
 [species](species.html) | `dplyr`, `tidyr` and `purrr` ideas with `portal_mammals` data
 [string](string.Rmd) | characters and strings
 [regex](regex.Rmd) | regular expressions
-[function](function.Rmd) | examples of functions
 [file](file.Rmd) | read and write files

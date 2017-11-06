@@ -8,6 +8,7 @@
 - Data Analysis for the Life Sciences by Rafa Irizarry and Michael Love ([edX series](https://www.edx.org/xseries/data-analysis-life-sciences) & [book](https://leanpub.com/dataanalysisforthelifesciences))
 - [RStudio Cheatsheets](https://www.rstudio.com/resources/cheatsheets/)
 - [R Language Tips & Tricks](learnR.md)
+- [Lemon Kickstart R](https://cran.r-project.org/doc/contrib/Lemon-kickstart/)
 - [Introduction to Data Science with R by David Langer](https://www.youtube.com/watch?v=32o0DnuRjfg&list=PLTJTBoU5HOCRrTs3cJK-PbHM39cwCU0PF)
 
 - [Statistical Computing Courses by Karl Broman](http://www.biostat.wisc.edu/~kbroman/teaching/)
