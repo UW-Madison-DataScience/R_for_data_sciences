@@ -9,18 +9,38 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+Below are some direct quotes from various sources on what functions are and why they are useful for data scientists:
+
+[R4DS](http://r4ds.had.co.nz/functions.html): Functions allow you to automate common tasks in a more powerful and general way than copy-and-pasting. Writing a function has three big advantages over using copy-and-paste:
+
+* You can give a function an evocative name that makes your code easier to understand.
+* As requirements change, you only need to update code in one place, instead of many.
+* You eliminate the chance of making incidental mistakes when you copy and paste (i.e. updating a variable name in one place, but not in another).
+
+... You should consider writing a function whenever you’ve copied and pasted a block of code more than twice (i.e. you now have three copies of the same code).
+... Functional programming (FP) offers tools to extract out this duplicated code, so each common for loop pattern gets its own function. Once you master the vocabulary of FP, you can solve many common iteration problems with less code, more ease, and fewer errors.
+
+[JB](http://stat545.com/cm102_writing-functions.html): My goal here is to reveal the process a long-time useR employs for writing functions. I also want to illustrate why the process is the way it is. Merely looking at the finished product, e.g. source code for R packages, can be extremely deceiving. Reality is generally much uglier … but more interesting! ... Build that skateboard before you build the car or some fancy car part. A limited-but-functioning thing is very useful. It also keeps the spirits high.
+
+[MRC](https://maryrosecook.com/blog/post/a-practical-introduction-to-functional-programming): Functional code is characterised by one thing: the absence of side effects. It doesn’t rely on data outside the current function, and it doesn’t change data that exists outside the current function.
+
+[CMU](http://www.stat.cmu.edu/~cshalizi/402/programming/writing-functions.pdf): The ability to read, understand, modify and write simple pieces of code is an essential skill for modern data analysis. ... Someone who just knows how to run canned routines is not a data analyst but a technician who tends a machine they do not understand. Fortunately, writing code is not actually very hard, especially not in R. All it demands is the discipline to think logically, and the patience to practice.
+
 - [User Written Function (Quick-R)](https://www.statmethods.net/management/userfunctions.html)
 - [Write your own R functions by Jenny Bryan](http://stat545.com/cm102_writing-functions.html)
     + [part 1: bare bone basics](http://stat545.com/block011_write-your-own-function-01.html)
     + [part 2: generalize for multiple uses](http://stat545.com/block011_write-your-own-function-02.html)
     + [part 3: missing values (`NA`) and pass through (`...`)](http://stat545.com/block011_write-your-own-function-03.html)
+    + [linear regression function in detail](http://stat545.com/block012_function-regress-lifeexp-on-year.html)
+    + [split-apply-combine the function to all countries](http://stat545.com/block013_plyr-ddply.html#recall-the-function-we-wrote-to-fit-a-linear-model)
+
+- [R4DS book](http://r4ds.had.co.nz/functions.html): [Functions](http://r4ds.had.co.nz/functions.html) & [Iteration](http://r4ds.had.co.nz/iteration.html)
 - [How to write and debug an R function (R Bloggers)](https://www.r-bloggers.com/how-to-write-and-debug-an-r-function/)
 - [Writing R Functions (CMU)](http://www.stat.cmu.edu/~cshalizi/402/programming/writing-functions.pdf)
 - [Introduction to R Functions (UC Berkeley)](https://www.stat.berkeley.edu/~statcur/Workshop2/Presentations/functions.pdf)
 - [DataCamp Tutorial on R functions](https://www.datacamp.com/community/tutorials/functions-in-r-a-tutorial)
 - [Kickstarting R: functions](https://cran.r-project.org/doc/contrib/Lemon-kickstart/kr_rfunc.html)
-- [linear regression function in detail](http://stat545.com/block012_function-regress-lifeexp-on-year.html)
-- [split-apply-combine the function to all countries](http://stat545.com/block013_plyr-ddply.html#recall-the-function-we-wrote-to-fit-a-linear-model)
+- [Practical intro to functional programming using python (MRC)](https://maryrosecook.com/blog/post/a-practical-introduction-to-functional-programming)
 
 miscellaneous notes:
 
