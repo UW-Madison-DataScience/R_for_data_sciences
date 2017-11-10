@@ -9,19 +9,125 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Diagnostics and testing
+- [Advanced R by Hadley Wickham (ebook)](http://adv-r.had.co.nz/): [Performance](http://adv-r.had.co.nz/Performance.html) & [Profiling](http://adv-r.had.co.nz/Profiling.html)
 
-- where are bottlenecks: `system.time()` and `Rprof()`
+“Programmers waste enormous amounts of time thinking about, or worrying about, the speed of noncritical parts of their programs, and these attempts at efficiency actually have a strong negative impact when debugging and maintenance are considered.” — Donald Knuth.
+
+Optimising code to make it run faster is an iterative process:
+
+- Find the biggest bottleneck (the slowest part of your code).
+- Try to eliminate it (you may not succeed but that’s ok).
+- Repeat until your code is “fast enough.”
+
+This sounds easy, but it’s not. (from [Advanced R by Hadley Wickham](http://adv-r.had.co.nz/))
+
+### Diagnostics and testing
+
+First, there are many ideas on how to diagnose bottlenecks and improve performance.
+Reread what was just 
+
+- where are bottlenecks: `system.time()` & `proc.time()`
 - what is broken: `traceback()` and `debug()`
-- does it do what I want:
+- does it do what I want?
     + informal unit testing of small pieces of code
     + using [testthat](https://github.com/hadley/testthat) package
     
-Several issues of code efficiency come up:
+### Several issues of code efficiency come up:
 
-- cautions on using `for` and `while` loops (see [data lesson](../curate/data.Rmd))
+- cautions on using `for` and `while` loops
+    + see [data example](../curate/applyExample.Rmd)
 - comparing floating point numbers: `all.equal()` and `1L`
 - R profiling of code with Rprof() (before optimizing)
+    + use `lineprof` package or `Rprof()` (see example in [Adv-R: Profiling](http://adv-r.had.co.nz/Profiling.html))
+
+### Example of system.time
+
+```{r}
+surveys <- read.csv("../data/surveys.csv")
+```
+
+```{r}
+forloop <- function(surveys) {
+  n_species <- length(unique(surveys$species_id))
+  means <- numeric(n_species)
+  names(means) <- sort(unique(surveys$species_id))
+  for(i in names(means))
+    means[i] <- mean(surveys$weight[surveys$species_id == i], na.rm = TRUE)
+  means
+}
+```
+
+```{r}
+system.time(fmeans <- forloop(surveys))
+```
+
+```{r message=FALSE}
+library(dplyr)
+```
+
+```{r}
+dplyrmeans <- function(surveys) {
+  surveys %>%
+    group_by(species_id) %>%
+    summarize(means = mean(weight, na.rm = TRUE)) %>%
+    ungroup
+}
+```
+
+```{r}
+system.time(dmeans <- dplyrmeans(surveys))
+```
+
+Alternatively, you can use the `proc.time()` function. See [data example](../curate/applyExample.Rmd)
+for timing using this approach.
+
+It is a good idea to examine results from different approaches.
+Here are two ways to do this.
+
+```{r}
+summary(fmeans - dmeans$means)
+```
+
+```{r}
+all.equal(fmeans, dmeans$means)
+```
+
+### Example of traceback and debug
+
+Suppose you have a little function that does not work quite right.
+
+```{r}
+lousy <- function(x) {
+  x <- as.character(x)
+  y <- 1
+  y <- sum(x, y)
+  y
+}
+double_lousy <- function(x) {
+  lousy(x)
+}
+```
+
+```{r}
+double_lousy("a")
+```
+
+```{r}
+debug(lousy)
+```
+
+Do the following in the console. Step through `lousy` using `return` or `n` & `return`.
+You can examine parameters at each step, or try out the next step before running it.
+
+```{r eval=FALSE}
+double_lousy("a")
+```
+
+### Unit tests
+
+See [Karl Broman's Writing Tests](http://kbroman.org/pkg_primer/pages/tests.html).
+The idea is to write tests of units of code (unit tests), to check out code a step at a time.
+Then go further, and set up unit tests to be reused whenever you change your code.
 
 [Travis Continuous Integration](https://travis-ci.org/) works with packages on github to make sure code works as expected each time it is changed. For `R`, this is often used in conjunction with [testthat](https://github.com/hadley/testthat). However, Travis/CI works for a wide range of software languages and platforms.
 

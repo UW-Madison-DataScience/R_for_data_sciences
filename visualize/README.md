@@ -17,4 +17,5 @@ file | contents
 [graphics](graphics.md) | visualization & graphics links
 [network](network/README.md) | network observations in connected graphs
 
+[http://r4ds.had.co.nz/](R4DS Book): [Data Visualization](http://r4ds.had.co.nz/data-visualisation.html) & [Graphics for Communication](http://r4ds.had.co.nz/graphics-for-communication.html)
 
