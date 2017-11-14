@@ -19,5 +19,6 @@ where it can be used for multiple purposes. This folder will be used for the nav
 - October 12th: Curating Data Structures with tidyverse tools
 - October 26th: Visualize Data in R (ggplot2, cowplot, heatmaps, etc.)
 - November 9th: Organizing Data Tasks with RMarkdown, functions and databases
+- November 15th: [Zoology Workshop on dplyr](zoology.Rmd)
 - **November 21st**: Profiling Code for Errors and Simulations **[Tuesday!]**
 - December 7th: Connecting Data Tools Beyond R
