@@ -41,6 +41,7 @@ Below are some direct quotes from various sources on what functions are and why 
 - [DataCamp Tutorial on R functions](https://www.datacamp.com/community/tutorials/functions-in-r-a-tutorial)
 - [Kickstarting R: functions](https://cran.r-project.org/doc/contrib/Lemon-kickstart/kr_rfunc.html)
 - [Practical intro to functional programming using python (MRC)](https://maryrosecook.com/blog/post/a-practical-introduction-to-functional-programming)
+- [indirection in programming](https://en.wikipedia.org/wiki/Indirection)
 
 miscellaneous notes:
 
