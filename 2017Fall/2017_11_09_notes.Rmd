@@ -1,0 +1,71 @@
+---
+title: "R Study Group Demo"
+author: "Brian S. Yandell"
+date: "11/9/2017"
+output:
+  html_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Notes from 2017-10-26
+
+Aggregating and analyzing data with dplyr 
+
+Here are some lists. Learn more about Rmarkdown with the `Help` -> `Markdown Quick Reference`.
+
+- list 1
+- list 2
+    + thing 2
+    + thing 2
+
+```{r eval=FALSE}
+download.file("http://kbroman.org/datacarp/portal_data_joined.csv", 
+              "portal_data_joined.csv")
+```
+
+```{r}
+surveys <- read.csv("portal_data_joined.csv",
+                    stringsAsFactors = FALSE)
+```
+
+```{r library, message=FALSE}
+library(dplyr)
+```
+
+```{r}
+surveys %>%
+  group_by(sex) %>%
+  tally()
+```
+
+```{r}
+surveys %>%
+  group_by(sex, species_id) %>%
+  summarize(mean_weight = median(weight, na.rm = TRUE)) %>%
+  filter(!is.na(mean_weight)) %>%
+  arrange(mean_weight)
+
+```
+
+Now take the above set of commands, put in a file and assign to a name `meanSexSpecies`
+```{r}
+source("2017_11_09_sourcefile.R")
+meanSexSpecies
+```
+
+## Simple plot
+
+```{r}
+# "http://kbroman.org/datacarp/portal_data_reduced.csv"
+reduced <- read.csv("portal_data_reduced.csv")
+
+library(ggplot2)
+
+ggplot(reduced, aes(x = weight, y = hindfoot_length)) +
+  geom_point()
+```
+
