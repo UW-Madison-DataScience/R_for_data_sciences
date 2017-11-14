@@ -66,6 +66,8 @@ surveys <- read.csv("portal_data_reduced.csv",
 If you use `download.file`, you only need to do this once to put it on your machine.
 Then you can read it multiple times. (The `stringsAsFactors` makes sure character columns remain characters.)
 
+### Examining the data
+
 You can examine `surveys` in a variety of ways. It is a table (called a `data frame`) with `r nrow(surveys)` rows and `r ncol(surveys)` columns. For instance, the `str` command gives the structure of the data:
 
 ```{r}
