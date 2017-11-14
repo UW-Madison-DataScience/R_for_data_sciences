@@ -210,6 +210,7 @@ library(ggplot2)
 surveys %>%
   group_by(sex, species_id) %>%
   summarize(mean_weight = mean(weight)) %>%
+  arrange(desc(mean_weight)) %>%
   
   ggplot() +
   aes(x = mean_weight, y = species_id) +
@@ -217,8 +218,8 @@ surveys %>%
   facet_wrap(~ sex)
 ```
 
-Hard to follow patterns, as species are ordered alphabetically by name. 
-Below we reorder by mean weight. Notice the subtle differences evident now between males and females.
+Hard to follow patterns, as `species_id` is by default ordered alphabetically by name. 
+Below we reorder `species_id` by `mean_weight`. Notice the subtle differences evident now between males and females.
 
 ```{r}
 surveys %>%
