@@ -22,3 +22,13 @@ Websites for the January 2018 workshops can be found at these addresses. Registr
 
 This session draws heavily on
 <http://kbroman.org/datacarpentry_R_2017-01-10/02-dplyr.html>.
+
+## Setup
+
+Please have the latest version of `R` (3.4.2 from <http://cran.r-project.org>) and `RStudio` (1.1.383 from <http://rstudio.com>). In addition, please install the `tidyverse`. You can do that within `RStudio` by going to the `Packages` tab of the lower right pane, click `Install`, type `tidyverse`, and click `Install` button. Or you can type the following on the console (lower left pane):
+
+```{r eval=FALSE}
+install.packages("tidyverse")
+```
+
+
