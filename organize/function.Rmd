@@ -35,6 +35,7 @@ Below are some direct quotes from various sources on what functions are and why 
     + [split-apply-combine the function to all countries](http://stat545.com/block013_plyr-ddply.html#recall-the-function-we-wrote-to-fit-a-linear-model)
 
 - [R4DS book](http://r4ds.had.co.nz/): [Functions](http://r4ds.had.co.nz/functions.html) & [Iteration](http://r4ds.had.co.nz/iteration.html)
+- [Adv-R book](http://adv-r.had.co.nz/): [Functional Programming](http://adv-r.had.co.nz/Functional-programming.html)
 - [How to write and debug an R function (R Bloggers)](https://www.r-bloggers.com/how-to-write-and-debug-an-r-function/)
 - [Writing R Functions (CMU)](http://www.stat.cmu.edu/~cshalizi/402/programming/writing-functions.pdf)
 - [Introduction to R Functions (UC Berkeley)](https://www.stat.berkeley.edu/~statcur/Workshop2/Presentations/functions.pdf)

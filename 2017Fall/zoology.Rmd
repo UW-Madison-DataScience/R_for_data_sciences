@@ -31,4 +31,229 @@ Please have the latest version of `R` (3.4.2 from <http://cran.r-project.org>) a
 install.packages("tidyverse")
 ```
 
+A couple good housekeeping settings for `RStudio`: 
 
+- Pull down menu `Tools` to `Global Options` and do the following to ensure you start each `RStudio` session with a clean slate:
+    + uncheck the `Restore .RData at into workspace startup`
+    + set the `Save workspace to .RData on exit` to `Never`
+- use the green plus in upper right, or `File`->`New File` to create an `R Script`. 
+    + This will put a blank page in the upper left pane. 
+    + Click the floppy disk to save, or use `File`->`Save as`, and give it a useful name such as `ZoologyDplyrWorkshop.R` (the `.R` and the end is important).
+    + Use `#` to add comments. Do this often.
+    + Save file often.
+
+### Getting the data
+
+Now that you are set up, please download the version of [mammals data](https://figshare.com/articles/Portal_Project_Teaching_Database/1314459/5) that Karl Broman has reduced to a cleaned up set. Either read the data directly across the internet
+
+```{r load_clean_data, eval=FALSE}
+surveys <- read.csv("http://kbroman.org/datacarp/portal_data_reduced.csv",
+                    stringsAsFactors = FALSE)
+```
+
+or download the file and then load it
+
+```{r download_then_load, eval=FALSE}
+download.file("http://kbroman.org/datacarp/portal_data_reduced.csv",
+              "portal_data_reduced.csv")
+```
+
+```{r}
+surveys <- read.csv("portal_data_reduced.csv",
+                    stringsAsFactors = FALSE)
+```
+
+If you use `download.file`, you only need to do this once to put it on your machine.
+Then you can read it multiple times. (The `stringsAsFactors` makes sure character columns remain characters.)
+
+You can examine `surveys` in a variety of ways. It is a table (called a `data frame`) with `r nrow(surveys)` rows and `r ncol(surveys)` columns. For instance, the `str` command gives the structure of the data:
+
+```{r}
+str(surveys)
+```
+
+We will use the `dplyr` package to examine it.
+First, attach the `dplyr` package. (Don't worry about warning messages.)
+
+```{r message=FALSE}
+library(dplyr)
+```
+
+Here are the records with `weight` less than 5, showing just `species_id`, `sex` and `weight`:
+
+```{r}
+surveys %>%
+  filter(weight < 5) %>%
+  select(species_id, sex, weight)
+```
+
+This already does many things, but hopefully you can read it off fairly easily.
+We `filter` the `surveys` data by `weight` and then `select` just a few columns.
+The data are passed from one "verb" to the next using the pipe (`%>%`). 
+The shortcut for the pipe `%>%` is  <kbd>`Ctrl`</kbd> +
+<kbd>`Shift`</kbd> + <kbd>`M`</kbd> (see `Tools`->`Keyboard Shortcuts`).
+
+You can assign this a new name using `<-`:
+
+```{r}
+surveys_sml <- surveys %>%
+  filter(weight < 5) %>%
+  select(species_id, sex, weight)
+```
+
+**Challenge:** Using pipes, subset the data to include individuals collected before 1995, and retain the columns `year`, `sex`, and `weight`.
+
+### Mutate
+
+You can create new columns using values in existing
+columns, for example to do unit conversions, or find the ratio of values in two
+columns. For this we'll use `mutate()`. To create a new column of `weight` in kg,
+and then just show a few columns and a few rows:
+
+```{r}
+surveys %>%
+  mutate(weight_kg = weight / 1000) %>%
+  select(record_id, weight, weight_kg) %>%
+  head
+```
+
+Instead of creating a new column, you can write over the original column:
+
+```{r}
+surveys %>%
+  mutate(weight = weight / 1000) %>%
+  head
+```
+
+### Split-apply-combine data analysis and the `summarize()` verb
+
+A "best practice" in data science is to consider the whole data object when planning a task.
+Suppose you want to find out how many entries there are in `surveys` by `sex`. You could
+look in a spreadsheet and sort by `sex` and then identify row numbers. Or you could use the
+important "split-apply-combine" paradigm: 
+
+- split the data into groups
+- apply some analysis to each group
+- combine the results
+
+`dplyr` makes this very easy with the `group_by()` verb to split the data into groups upon which some
+operations can be run. Here, we group by sex and find the
+number of rows of data for each sex, we would do:
+
+```{r}
+surveys %>%
+  group_by(sex) %>%
+  tally()
+```
+
+Here, `tally()` is the action applied to the groups created to `group_by()` and counts the total number of records for each category. `group_by()` is often used together with `summarize()`, which collapses each
+group into a single-row summary of that group. So to view mean `weight` by sex:
+
+```{r}
+surveys %>%
+  group_by(sex) %>%
+  summarize(mean_weight = mean(weight))
+```
+
+You can group by multiple columns too:
+
+```{r}
+surveys %>%
+  group_by(sex, species_id) %>%
+  summarize(mean_weight = mean(weight))
+```
+
+**Challenge:** How many times was each plot_type surveyed?
+
+**Challenge:** Use `group_by` and `summarize` verbs to find the `mean`, `min`, and `max` hindfoot length for each species.
+
+### Sorting data
+
+If you want them sorted , use the `arrange` verb:
+
+```{r}
+surveys %>%
+  group_by(sex, species_id) %>%
+  summarize(mean_weight = mean(weight))
+```
+
+Sort from highest to lowest use `desc()`:
+
+```{r}
+surveys %>%
+  group_by(sex, species_id) %>%
+  summarize(mean_weight = mean(weight)) %>%
+  arrange(desc(mean_weight))
+```
+
+### Writing data out
+
+Maybe you want to save the last bit:
+
+```{r}
+surveys %>%
+  group_by(sex, species_id) %>%
+  summarize(mean_weight = mean(weight)) %>%
+  arrange(desc(mean_weight)) %>%
+  write.csv("SexSpeciesWeight.csv")
+```
+
+### A simple plot
+
+Let's plot weight by species and sex. Here is one way to do it using the `ggplot2` package.
+
+```{r}
+library(ggplot2)
+```
+
+```{r}
+surveys %>%
+  group_by(sex, species_id) %>%
+  summarize(mean_weight = mean(weight)) %>%
+  
+  ggplot() +
+  aes(x = mean_weight, y = species_id) +
+  geom_point() +
+  facet_wrap(~ sex)
+```
+
+Hard to follow patterns, as species are ordered alphabetically by name. 
+Below we reorder by mean weight. Notice the subtle differences evident now between males and females.
+
+```{r}
+surveys %>%
+  group_by(sex, species_id) %>%
+  summarize(mean_weight = mean(weight)) %>%
+  
+  ggplot() +
+  aes(x = mean_weight, y = reorder(species_id, mean_weight)) +
+  geom_point() +
+  facet_wrap(~ sex)
+```
+
+### Missing data and all
+
+The original Data Carpentry lesson used the full `surveys` data, which has missing values.
+Missing data complicates things, but you should learn how to work with them, as they cannot
+be ignored. See the <http://kbroman.org/datacarpentry_R_2017-01-10/02-dplyr.html>
+and the rest of the Data Carpentry Lessons (<http://www.datacarpentry.org/lessons/#ecology-workshop>)
+for more ideas.
+
+### On beyond
+
+This is just a start, to build competency and confidence that you can learn more. 
+There are several more `dplyr` verbs, and other data wrangling packages (`tidyr`, `purrr`) to learn about.
+Two excellent sources beyond the Data Carpentry materials are
+
+- [R for Data Science by Garrett Grolemund and Hadley Wickham (ebook)](http://r4ds.had.co.nz/)
+- [Data wrangling, exploration, and analysis with R by Jenny Bryan (course)](http://stat545.com/)
+
+See other references [here](https://github.com/datascience-uwmadison/R_for_data_sciences/blob/master/reference.md).
+
+### R Study Group
+
+The campus group [COMBEE (Computational Biology, Ecology, & Evolution)](https://combee-uw-madison.github.io/studyGroup/) hosts the [COMBEE R Study Group](https://github.com/ComBEE-UW-Madison/RStudyGroup).
+Newbies and experienced R users are invited to attend.
+
+Or you can spawn your own R Study Group, stealing ideas from this one.
+The best way to learn `R` is to do it, and to talk with others or search for ideas on the internet.
