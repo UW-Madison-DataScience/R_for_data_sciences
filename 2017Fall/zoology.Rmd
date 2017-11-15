@@ -1,7 +1,7 @@
 ---
 title: "Zoology Dplyr Workshop"
 author: "Brian S. Yandell"
-date: "11/14/2017"
+date: "11/16/2017"
 output: html_document
 ---
 
@@ -20,7 +20,9 @@ Websites for the January 2018 workshops can be found at these addresses. Registr
 - Software Carpentry, January 10-11
 <https://uw-madison-aci.github.io/2018-01-10-uwmadison-swc/>
 
-This session draws heavily on
+The `R` day of Data Carpentry will be similar to this material:
+<http://kbroman.org/datacarpentry_R_2017-01-10/>.
+The Zoology session today draws heavily on
 <http://kbroman.org/datacarpentry_R_2017-01-10/02-dplyr.html>.
 
 ## Setup
