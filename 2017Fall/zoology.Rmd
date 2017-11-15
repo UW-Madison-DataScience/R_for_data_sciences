@@ -9,7 +9,8 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-This is a 30-45 minute session on data wrangling, primarily with the `dplyr` package.
+This is a 30-45 minute session on data wrangling, primarily with the `dplyr` package. The sample code is below and in the source file [zoology.R](zoology.R).
+
 Material is drawn from the [Aggregating and analyzing data with dplyr](http://kbroman.org/datacarpentry_R_2017-01-10/02-dplyr.html) session that is part of the 2-day [Data Carpentry](http://www.datacarpentry.com) workshop taught on campus several times a year.
 
 Websites for the January 2018 workshops can be found at these addresses. Registration opens for BOTH on December 11 at 5:00.  
