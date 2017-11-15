@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 This is a 30-45 minute session on data wrangling, primarily with the `dplyr` package.
-Material is drawn from the "Aggregating and analyzing data with dplyr" session that is part of the 2-day [Data Carpentry](http://www.datacarpentry.com) workshop taught on campus several times a year.
+Material is drawn from the [Aggregating and analyzing data with dplyr](http://kbroman.org/datacarpentry_R_2017-01-10/02-dplyr.html) session that is part of the 2-day [Data Carpentry](http://www.datacarpentry.com) workshop taught on campus several times a year.
 
 Websites for the January 2018 workshops can be found at these addresses. Registration opens for BOTH on December 11 at 5:00.  
 
@@ -20,7 +20,7 @@ Websites for the January 2018 workshops can be found at these addresses. Registr
 - Software Carpentry, January 10-11
 <https://uw-madison-aci.github.io/2018-01-10-uwmadison-swc/>
 
-The `R` day of Data Carpentry will be similar to this material:
+The `R` day of Data Carpentry will be similar to material at
 <http://kbroman.org/datacarpentry_R_2017-01-10/>.
 The Zoology session today draws heavily on
 <http://kbroman.org/datacarpentry_R_2017-01-10/02-dplyr.html>.
@@ -35,14 +35,20 @@ install.packages("tidyverse")
 
 A couple good housekeeping settings for `RStudio`: 
 
-- Pull down menu `Tools` to `Global Options` and do the following to ensure you start each `RStudio` session with a clean slate:
-    + uncheck the `Restore .RData at into workspace startup`
+- Set up `RStudio` to ensure you start each project session with a clean slate
+    + pull down menu `Tools` to `Global Options`
+    + uncheck the box for `Restore .RData into workspace startup`
     + set the `Save workspace to .RData on exit` to `Never`
-- Use the green plus in upper left corner, or `File`->`New File`, to create an `R Script`. 
-    + This will put a blank page in the upper left pane. 
-    + Click the floppy disk to save, or use `File`->`Save as`, and give it a useful name such as `ZoologyDplyrWorkshop.R` (the `.R` and the end is important).
-    + Use `#` to add comments. Do this often.
-    + Save file often.
+- Create a new project in a clean folder for your work
+    + use green plus with `R` in upper left corner, or `File`->`New Project...`, to `Create Project` in `New Directory` or `Existing Directory`
+    + go to `New Project`, browse to `Create project as subdirectory of`, and give a `Directory Name`
+    + if useing an existing direcory, browse to the right `Project working directory`
+- Create a new script in the project to keep notes
+    + use the green plus in upper left corner, or `File`->`Open File...`, to create an `R Script` 
+    + click floppy disk in upper left corner to save, or use `File`->`Save as`; give file a useful name such as `ZoologyDplyrWorkshop.R` (the `.R` at the end is important).
+    + start typing R instructions in the blank page in the upper left pane 
+    + use `#` to add comments; do this often.
+    + save file often
 
 ### Getting the data
 
@@ -65,7 +71,8 @@ surveys <- read.csv("portal_data_reduced.csv",
                     stringsAsFactors = FALSE)
 ```
 
-If you use `download.file`, you only need to do this once to put it on your machine.
+If you use `download.file`, you only need to do this once to put a copy of the file on your machine
+in your project directory.
 Then you can read it multiple times. (The `stringsAsFactors` makes sure character columns remain characters.)
 
 ### Examining the data
@@ -75,6 +82,8 @@ You can examine `surveys` in a variety of ways. It is a table (called a `data fr
 ```{r}
 str(surveys)
 ```
+
+You can also find this summary by going to the `Environement` tab in the upper left pane and clicking the blue circle to the left of the names `surveys`.  Clicking the table to the far right of the name brings up a copy of the table in the upper left pane.
 
 We will use the `dplyr` package to examine it.
 First, attach the `dplyr` package. (Don't worry about warning messages.)
@@ -97,7 +106,7 @@ The data are passed from one "verb" to the next using the pipe (`%>%`).
 The shortcut for the pipe `%>%` is  <kbd>`Ctrl`</kbd> +
 <kbd>`Shift`</kbd> + <kbd>`M`</kbd> (see `Tools`->`Keyboard Shortcuts`).
 
-You can assign this a new name using `<-`:
+Note that no change is made to the `surveys` data. If you want to save changes (within R), you can assign this a new name using `<-`:
 
 ```{r}
 surveys_sml <- surveys %>%
@@ -105,9 +114,18 @@ surveys_sml <- surveys %>%
   select(species_id, sex, weight)
 ```
 
+The following also works with `->` instead:
+
+```{r}
+surveys %>%
+  filter(weight < 5) %>%
+  select(species_id, sex, weight) ->
+  surveys_sml
+```
+
 **Challenge:** Using pipes, subset the data to include individuals collected before 1995, and retain the columns `year`, `sex`, and `weight`.
 
-### Mutate
+### Mutate columns to alter table presentation
 
 You can create new columns using values in existing
 columns, for example to do unit conversions, or find the ratio of values in two
@@ -129,7 +147,7 @@ surveys %>%
   head
 ```
 
-### Split-apply-combine data analysis and the `summarize()` verb
+### Split-apply-combine data analysis and the `summarize` verb
 
 A "best practice" in data science is to consider the whole data object when planning a task.
 Suppose you want to find out how many entries there are in `surveys` by `sex`. You could
