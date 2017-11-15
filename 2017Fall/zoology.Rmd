@@ -36,7 +36,7 @@ A couple good housekeeping settings for `RStudio`:
 - Pull down menu `Tools` to `Global Options` and do the following to ensure you start each `RStudio` session with a clean slate:
     + uncheck the `Restore .RData at into workspace startup`
     + set the `Save workspace to .RData on exit` to `Never`
-- use the green plus in upper right, or `File`->`New File` to create an `R Script`. 
+- Use the green plus in upper left corner, or `File`->`New File`, to create an `R Script`. 
     + This will put a blank page in the upper left pane. 
     + Click the floppy disk to save, or use `File`->`Save as`, and give it a useful name such as `ZoologyDplyrWorkshop.R` (the `.R` and the end is important).
     + Use `#` to add comments. Do this often.
