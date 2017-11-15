@@ -12,6 +12,7 @@ where it can be used for multiple purposes. This folder will be used for the nav
 - [2017-10-26 Split-Apply-Combine to ggplot2](2017_10_29_RSG.md)
 [[R notes](2017_10_26_notes.R)]
 - [2017-11-09 Organizing Data Tasks](2017_11_09_RSG.md) [[Rmd notes](2017_11_09_notes.Rmd) | [R sourcefile](2017_11_09_sourcefile.R)]
+- [2017-11-15 Zoology Group](zoology.Rmd) [[R source](zoology.R)]
 
 ## Fall 2017 Schedule:
 
