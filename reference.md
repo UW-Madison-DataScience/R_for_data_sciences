@@ -7,6 +7,7 @@
 - [Data Carpentry: R for Ecologists (workshop)](http://www.datacarpentry.org/R-ecology-lesson/) | [Karl Broman version](http://kbroman.org/datacarpentry_R_2017-01-10/)
 - Data Analysis for the Life Sciences by Rafa Irizarry and Michael Love ([edX series](https://www.edx.org/xseries/data-analysis-life-sciences) & [book](https://leanpub.com/dataanalysisforthelifesciences))
 - [RStudio Cheatsheets](https://www.rstudio.com/resources/cheatsheets/)
+- [RStudio Communities](https://community.rstudio.com)
 - [R Language Tips & Tricks](learnR.md)
 - [Lemon Kickstart R](https://cran.r-project.org/doc/contrib/Lemon-kickstart/)
 - [Introduction to Data Science with R by David Langer](https://www.youtube.com/watch?v=32o0DnuRjfg&list=PLTJTBoU5HOCRrTs3cJK-PbHM39cwCU0PF)
