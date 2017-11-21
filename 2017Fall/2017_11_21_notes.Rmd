@@ -1,0 +1,155 @@
+---
+title: "Notes for Profiling"
+author: "Brian S. Yandell"
+date: "11/21/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+These notes accompany the topics for <2017_11_21_RSG.md>.
+
+```{r}
+surveys <- read.csv("portal_data_reduced.csv")
+```
+
+```{r}
+forloop <- function(surveys) {
+  n_species <- length(unique(surveys$species_id))
+  means <- numeric(n_species)
+  names(means) <- sort(unique(surveys$species_id))
+  for(i in names(means))
+    means[i] <- mean(surveys$weight[surveys$species_id == i], na.rm = TRUE)
+  means
+}
+```
+
+```{r}
+system.time(fmeans <- forloop(surveys))
+```
+
+```{r message=FALSE}
+library(dplyr)
+```
+
+```{r}
+dplyrmeans <- function(surveys) {
+  surveys %>%
+    group_by(species_id) %>%
+    summarize(means = mean(weight, na.rm = TRUE)) %>%
+    ungroup
+}
+```
+
+```{r}
+system.time(dmeans <- dplyrmeans(surveys))
+```
+
+```{r}
+summary(fmeans - dmeans$means)
+```
+
+```{r}
+all.equal(fmeans, dmeans$means)
+```
+
+## Debug code
+
+```{r}
+lousy <- function(x) {
+  x <- as.character(x)
+  y <- 1
+  y <- sum(x, y)
+  y
+}
+double_lousy <- function(x) {
+  lousy(x)
+}
+```
+
+```{r}
+double_lousy(1)
+```
+
+Now use `traceback()` and `debug()` to explore.
+
+## Profiling stuff
+
+```{r eval=FALSE}
+devtools::install_github("hadley/lineprof")
+```
+
+```{r}
+library(lineprof)
+f <- function() {
+  pause(0.1)
+  g()
+  h()
+}
+g <- function() {
+  pause(0.1)
+  h()
+}
+h <- function() {
+  pause(0.1)
+}
+```
+
+```{r}
+tmp <- tempfile()
+Rprof(tmp, interval = 0.01)
+f()
+Rprof(NULL)
+```
+
+```{r eval=FALSE}
+file.show(tmp)
+```
+
+```{r}
+l <- lineprof(f())
+l
+```
+
+## Environments
+
+Here is a neat trick with functions. You can embed the value of a named argument (here `dbname`) in the environment of a function that you create within a function. For more, see [Adv-R book](http://adv-r.had.co.nz/): [Functional Programming](http://adv-r.had.co.nz/Functional-programming.html) & [Environments](http://adv-r.had.co.nz/Environments.html).
+
+```{r}
+embed_name <- function(dbname) {
+  date_now <- date()
+  function(a) {
+    paste(a, dbname)
+  }
+}
+```
+
+```{r}
+newF <- embed_name("mine")
+```
+
+```{r}
+newF("a")
+```
+```{r}
+embed_name
+```
+
+```{r}
+newF
+```
+
+```{r}
+environment(newF)
+```
+
+```{r}
+ls(environment(newF))
+```
+
+```{r}
+ls.str(environment(newF))
+```
+

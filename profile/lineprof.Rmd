@@ -1,0 +1,48 @@
+---
+title: "lineprof"
+author: "Brian S. Yandell"
+date: "11/21/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This is taken directly from <http://adv-r.had.co.nz/Profiling.html>.
+
+```{r}
+library(lineprof)
+f <- function() {
+  pause(0.1)
+  g()
+  h()
+}
+g <- function() {
+  pause(0.1)
+  h()
+}
+h <- function() {
+  pause(0.1)
+}
+```
+
+```{r}
+tmp <- tempfile()
+Rprof(tmp, interval = 0.1)
+f()
+Rprof(NULL)
+```
+
+```{r}
+file.show(tmp)
+```
+
+```{r}
+(l <- lineprof(f()))
+```
+
+```{r eval=FALSE}
+shine(l)
+```
+

@@ -38,7 +38,7 @@ Reread what was just
     + see [data example](../curate/applyExample.Rmd)
 - comparing floating point numbers: `all.equal()` and `1L`
 - R profiling of code with Rprof() (before optimizing)
-    + use `lineprof` package or `Rprof()` (see example in [Adv-R: Profiling](http://adv-r.had.co.nz/Profiling.html))
+    + use `lineprof` package or `Rprof()` (see [lineprof.Rmd](lineprof.Rmd) and example in [Adv-R: Profiling](http://adv-r.had.co.nz/Profiling.html))
 
 ### Example of system.time
 
@@ -108,11 +108,11 @@ double_lousy <- function(x) {
 }
 ```
 
-```{r}
+```{r eval=FALSE}
 double_lousy("a")
 ```
 
-```{r}
+```{r eval=FALSE}
 debug(lousy)
 ```
 
