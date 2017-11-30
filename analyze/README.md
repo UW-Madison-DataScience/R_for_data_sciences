@@ -12,6 +12,8 @@ do first steps to analyze data in `R`.
 - develop annotated plots that reflect project design
 - organize linear model results with [broom](https://github.com/tidyverse/broom), [car](https://cran.r-project.org/web/packages/car/index.html), or [lsmeans](https://github.com/rvlenth/lsmeans) packages
 - clustering and trees, building networks
+- models that are not linear: generalized linear models, non-linear models
+- formulas
 
 file | contents
 ---- | --------

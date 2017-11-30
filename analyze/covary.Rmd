@@ -90,19 +90,86 @@ ggplot(surveys_dip,
   coord_flip()
 ```
 
+Given that variability seems to increase with weight, it often makes sense to
+use a `log` transform to put weight on a relative scale. Here we will try `log10` in two ways.
+
+```{r}
+ggplot(surveys_dip,
+       aes(x = species, y = weight)) +
+  geom_jitter(col="lightgrey") +
+  geom_boxplot() + 
+  coord_flip() +
+  scale_y_log10()
+```
+
+```{r}
+ggplot(surveys_dip,
+       aes(x = species, y = log10(weight))) +
+  geom_jitter(col="lightgrey") +
+  geom_boxplot() + 
+  coord_flip()
+```
+
+The plots visually look the same except for the scale on the horizontal axis.
+
 ```{r}
 ggplot(surveys_dip,
        aes(x = weight, col = species, )) +
-  geom_density()
+  geom_density() +
+  scale_x_log10()
 ```
 
+Notice how the shapes of the densities are similar, which is supportive
+of the use of `log10` transformation.
 Sometimes it is easier to see patterns by using facets.
 
 ```{r}
 ggplot(surveys_dip,
        aes(x = weight, col = species, )) +
   geom_density() +
-  facet_grid(species~.)
+  facet_grid(species~.) +
+  scale_x_log10()
+```
+
+We can formally compare weight among species using analysis of variance.
+We first fit using the linear model verb `lm`, then use `anova` to get an analysis of variance table. [There is another verb, `aov`, but most people just use the more flexible `lm`.]
+
+```{r}
+fit <- lm(log10(weight) ~ species, surveys_dip)
+anova(fit)
+```
+
+Paradoxically, more information comes with the `summary` of `fit`.
+
+```{r}
+summary(fit)
+```
+
+The `broom` package has many nice ways to turn output of a test into a data frame for later reuse.
+
+```{r}
+broom::tidy(fit)
+```
+
+If we are really interested in the means, one way to get them is to remove the intercept, which is done with a `0` or `-1` in the formula.
+
+```{r}
+fit0 <- lm(log10(weight) ~ 0 + species, surveys_dip)
+broom::tidy(fit0)
+```
+
+However, it is much easier to use the `lsmeans` package:
+
+```{r}
+lsmeans::lsmeans(fit, ~ species)
+```
+
+Recall that these are means of the `log10` of `weight`. Best practice if you want in original units with indication of precision is to find the confidence interval and back-transform (`10^value`) those. It makes no sense to back-transform the `SE`.
+
+There is another package called `car` (Companion to Applied Regression) that goes along with the _Applied Regression_ book by Fox and Weisberg. This is a powerful package, but takes some getting used to. Here is their analysis of variance function.
+
+```{r}
+car::Anova(fit)
 ```
 
 ### Challenge

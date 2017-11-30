@@ -225,6 +225,7 @@ surveys_plot +
               col="red", lwd=1) +
   geom_smooth(method = "lm", se = FALSE)
 ```
+
 We say that we "regress `hindfoot_length` on `weight`". This is sometimes called "simple linear regression", because the right side of this formula can get a lot more complicated (in later lessons). We introduce this concept here to make the bridge to the next lesson on covariates, and to connect correlation to linear models.
 
 Simple linear regression is a special kind of "linear model". The linear model function `lm()` provides another tool to test correlation, with more flexibility than `cor.test()`. `lm` has more bells and whistles and `lm` can handle more complicated relationships.
