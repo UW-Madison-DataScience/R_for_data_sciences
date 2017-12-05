@@ -19,7 +19,7 @@ file | contents
 ---- | --------
 [correlate](correlate.Rmd) | co-relate variables (columns) of data
 [covary](covary.Rmd) | how do columns co-vary together
-[linear_model](linear_model.md) | linear models
+[linear_model](linear_model.Rmd) | linear models
 [sysgen](sysgen.md) | systems genetics
 
 Douglas Bates
