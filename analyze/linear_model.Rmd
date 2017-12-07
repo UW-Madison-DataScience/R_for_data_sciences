@@ -40,7 +40,8 @@ The other type are models in which predictors have a non-linear relation with re
     + binomial test (`binom.test`)
     + Poisson regression
     + logistic regression (`glm`)
-- non-linear models
+- [non-linear models](https://www.r-bloggers.com/first-steps-with-non-linear-regression-in-r/)
+    + [nls package](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/nls.html)
 
 ## Mixed models
 
@@ -51,4 +52,5 @@ Some models mix so-called fixed and random effects. Fixed are as above. Random e
 - [gemma](http://www.xzlab.org/software.html)
 - [glmmnet package](https://cran.r-project.org/web/packages/glmnet/)
 - [Andrew Gelman](http://www.stat.columbia.edu/~gelman/)'s [arm package](http://www.stat.columbia.edu/~gelman/arm/software/) & [stan Platform](http://mc-stan.org/)
+- [Mixed Models in R: lme4, nlme, or both?](https://freshbiostats.wordpress.com/2013/07/28/mixed-models-in-r-lme4-nlme-both/)
 

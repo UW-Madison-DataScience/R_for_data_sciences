@@ -4,8 +4,9 @@
 connect with other data science tools beyond R.
 
 - use [unix/linux shell](linux.md) to search and modify project
-- build a basic pipeline or workflow in the shell
-- high throughput computing
+- [initial steps toward reproducible research](http://kbroman.org/steps2rr/)
+- [build a basic pipeline or workflow in the shell](http://stat545-ubc.github.io/automation00_index.html)
+- [Scaling up the split-apply-combine paradigm](scaling_up.md)
 
 References
 
