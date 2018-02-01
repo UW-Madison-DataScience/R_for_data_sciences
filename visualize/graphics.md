@@ -2,7 +2,7 @@
 
 Visualization is the key to quick insights with data.
 
--   [Visualization with R](/network-skills/learnR#graph)
+-   [Visualization with R](visualize.md)
 -   Dynamic Graphics
     -   [Shiny](http://shinyapps.io)
         -   [UW Statistics Shiny Apps](http://www.stat.wisc.edu/shiny/)
