@@ -29,6 +29,7 @@ Visualization is the key to quick insights with data.
     & [Top 10 Worst
     Graphs](http://www.biostat.wisc.edu/~kbroman/topten_worstgraphs/)
     ([Karl Broman](http://www.biostat.wisc.edu/~kbroman/presentations))
+-   [Graphical Data Presentation (2004 Yandell) Talk at Horticulture Meeting](http://pages.stat.wisc.edu/~yandell/talk/hort/2004.ashs/graphics.pdf)
 -   [Edward Tufte](http://www.edwardtufte.com/tufte/) & [Evils of
     PowerPoint](http://www.thejuryexpert.com/2011/11/a-necessary-evil-edward-tufte-and-making-the-best-of-powerpoint/)
 -   [Gapminder](http://www.gapminder.org/) | [Six Simple Techniques for
