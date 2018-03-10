@@ -43,6 +43,7 @@ Visualization is the key to quick insights with data.
 -   [Google N-Grams](https://books.google.com/ngrams)
 -   [BabyName Wizard: Voyager (Laura
     Wattenberg)](http://www.babynamewizard.com/voyager#)
+-   [Circos Visualization](http://circos.ca/)
 -   [Fernanda Viegas Visualization
     Projects](http://fernandaviegas.com/projects.html)
 -   [ImageJ](http://rsbweb.nih.gov/ij/) |
