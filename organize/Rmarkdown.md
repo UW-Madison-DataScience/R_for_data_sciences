@@ -11,6 +11,7 @@ Rmarkdown works best on a machine with the latest versions of [R](https://cran.r
 - [Rmarkdown from RStudio](http://rmarkdown.rstudio.com/)
 - [Rmarkdown Gallery](http://rmarkdown.rstudio.com/gallery.html) & [Rmarkdown Articles](http://rmarkdown.rstudio.com/articles.html) 
 - [Rmarkdown Example](RmarkdownExample.Rmd)
+- [R package primer](http://kbroman.org/pkg_primer/)
 
 - [R4DS book](http://r4ds.had.co.nz/): [Rmarkdown](http://r4ds.had.co.nz/r-markdown.html) 
 - [Knitr in a knutshell by Karl Broman](http://kbroman.org/knitr_knutshell/)

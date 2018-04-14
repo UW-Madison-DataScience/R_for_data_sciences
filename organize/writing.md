@@ -58,4 +58,4 @@ Many of the links above have communication resources.
         included [MathJax typesetting in a blog written in Markdown and
         served via
         Django](http://somesquares.org/blog/2013/4/integrating-mathjax-and-markdown-django).
-    -   Prefered slide package with Rstudio/RMarkdown: [xaringan](https://github.com/yihui/xaringan)
+    -   Prefered slide package with Rstudio/RMarkdown: [xaringan](https://github.com/yihui/xaringan). Other options are [Beamer with LaTeX](https://www.sharelatex.com/learn/Beamer) and [Reveal.js](https://github.com/hakimel/reveal.js/). 
