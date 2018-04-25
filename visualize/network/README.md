@@ -10,6 +10,8 @@ base name | details
 
 The `network_data.Rmd` file will download the ZIP file, data files, and Katya Ognyanova's tutorial as PDF and R. See **Network Visualization with R**, [Polnet 2016](http://www.kateto.net/polnet2016) by [Katya Ognyanova](http://kateto.net/network-visualization). Katya discusses other packages as well as igraph and visNetwork.
 
+See also [Network Visualization Examples with the ggplot2 Package](https://mran.microsoft.com/snapshot/2017-08-18/web/packages/ggCompNet/vignettes/examples-from-paper.html), which highlights the `geomnet` and `ggnetwork` packages and the `GGally::ggnet2` function. 
+
 Files from Katya:
 
 file | description
