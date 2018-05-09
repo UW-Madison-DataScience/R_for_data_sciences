@@ -193,7 +193,7 @@ y
 
 A function has its own environment. Within a function, you can define a function with its own environment,
 which can be real handy. Karl Broman uses this in [R/qtl2](http://kbroman.org/qtl2/assets/vignettes/user_guide.html#connecting_to_snp_and_gene_databases) to query an SQL database. The idea draws on [Adv-R book: Environments](http://adv-r.had.co.nz/Environments.html).
-The details can be found in his `create_*_query_func`, but here is the basic idea. Set up a `create` function to create a function that calls your function. Here, we want the created function to have arguments `chr`, `start` and `end` (chromosome name, and `start` and `end` of region of interest to extract information). Your function has these arguments and more, specifically a database file names (`dbfile`).
+The details can be found in for instance [create_variant_query_func](https://github.com/rqtl/qtl2/blob/master/R/create_variant_query_func.R), but here is the basic idea. Set up a `create` function to create a function that calls your function. Here, we want the created function to have arguments `chr`, `start` and `end` (chromosome name, and `start` and `end` of region of interest to extract information). Your function has these arguments and more, specifically a database file names (`dbfile`).
 
 ```{r}
 create_query_func <-function(dbfile) {
