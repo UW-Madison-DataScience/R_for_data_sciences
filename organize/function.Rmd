@@ -192,8 +192,8 @@ y
 ## Functions and environments
 
 A function has its own environment. Within a function, you can define a function with its own environment,
-which can be real handy. Karl Broman uses this in [R/qtl2](http://kbroman.org/qtl2/assets/vignettes/user_guide.html#connecting_to_snp_and_gene_databases) to query an SQL database. The idea draws on [Adv-R book: Environments](http://adv-r.had.co.nz/Environments.html).
-The details can be found in for instance [create_variant_query_func](https://github.com/rqtl/qtl2/blob/master/R/create_variant_query_func.R), but here is the basic idea. Set up a `create` function to create a function that calls your function. Here, we want the created function to have arguments `chr`, `start` and `end` (chromosome name, and `start` and `end` of region of interest to extract information). Your function has these arguments and more, specifically a database file names (`dbfile`).
+which can be real handy. Karl Broman uses this in [R/qtl2](http://kbroman.org/qtl2/assets/vignettes/user_guide.html#connecting_to_snp_and_gene_databases) to query an SQL database for genes and variants. The idea draws on [Adv-R book: Environments](http://adv-r.had.co.nz/Environments.html).
+The details can be found in for instance [create_gene_query_func](https://github.com/rqtl/qtl2/blob/master/R/create_gene_query_func.R), but here is the basic idea. Set up a `create` function to create a function that calls your function. Here, we want the created function to have arguments `chr`, `start` and `end` (chromosome name, and `start` and `end` of region of interest to extract information). Your function has these arguments and more, specifically a database file names (`dbfile`).
 
 ```{r}
 create_query_func <-function(dbfile) {
@@ -242,4 +242,38 @@ saveRDS(qf, file = "qf.rds")
 qf <- readRDS("qf.rds")
 ```
 
+Here is a more complicated example. This uses the [AnnotationHub](https://bioconductor.org/packages/release/bioc/html/AnnotationHub.html) package, which is a central location to discover genomic files (see [HowTo](http://bioconductor.org/packages/devel/bioc/vignettes/AnnotationHub/inst/doc/AnnotationHub-HOWTO.html)).
+The creation function pulls in the [Ensembl](https://ensembl.org) genes for mouse, stores them in an object called `ensembl`, and returns a function that has the `ensembl` object embedded. The `AnnotationHub` and all its [Bioconductor](https://www.bioconductor.org/) helper packages (there are many) are needed to create the gene query, but subsequent use of `query_gene_AH` does not require anything from `Bioconductor`. The `query_gene_AH` function need only be recreated whenever the `AnnotationHub` entries change substantially. This created function can be saved using `saveRDS` as indicated above, and then transported to use in various pipelines.
 
+```{r eval=FALSE}
+create_gene_query_func_AH <- function(pattern = c("ensembl", "gtf", "mus musculus", "90"),
+                                      filename = "Mus_musculus.GRCm38.90.gtf",
+                                      chr_field = "seqnames",
+                                      start_field = "start", stop_field = "end",
+                                      filter = NULL) {
+  if(is.null(pattern) & is.null(filename))
+      stop("must provide pattern and filename")
+  
+  # Visit AnnotationHub to get ensemble entries.
+  hub <- AnnotationHub::AnnotationHub()
+  hub <- AnnotationHub::query(hub, pattern)
+  ensembl <- hub[[names(hub)[hub$title == filename]]]
+  ensembl <- as.data.frame(ensembl[ensembl$type == "gene"])
+  colnames(ensembl)[colnames(ensembl) == "gene_id"] <- "ensembl_gene"
+  colnames(ensembl)[colnames(ensembl) == "gene_name"] <- "symbol"
+  ensembl[[start_field]] <- ensembl[[start_field]] * 10^-6
+  ensembl[[stop_field]]  <- ensembl[[stop_field]] * 10^-6
+  ensembl <- ensembl[, sapply(ensembl, function(x) !all(is.na(x)))]
+
+  function(chr, start = NULL, end = NULL) {
+    subset_ensembl <- ensembl[[chr_field]] == chr
+    if(!is.null(start))
+      subset_ensembl <- subset_ensembl & (ensembl[[start_field]] >= start)
+    if(!is.null(end))
+      subset_ensembl <- subset_ensembl & (ensembl[[stop_field]] >= end)
+    ensembl[subset_ensembl,]
+  }
+}
+cat("AnnotationHub call\n", file = stderr())
+query_gene_AH <- create_gene_query_func_AH()
+```
