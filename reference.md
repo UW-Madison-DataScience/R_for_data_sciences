@@ -12,6 +12,7 @@
 - [Lemon Kickstart R](https://cran.r-project.org/doc/contrib/Lemon-kickstart/)
 - [Introduction to Data Science with R by David Langer](https://www.youtube.com/watch?v=32o0DnuRjfg&list=PLTJTBoU5HOCRrTs3cJK-PbHM39cwCU0PF)
 - [Data Skeptic by Kyle Polich](https://dataskeptic.com/)
+- [Data 8: The Foundations of Data Science (UC Berkeley)](http://data8.org/) (see [undergrad program report](https://data.berkeley.edu/sites/default/files/dsepsummaryreportyear1.pdf))
 
 - [Statistical Computing Courses by Karl Broman](http://www.biostat.wisc.edu/~kbroman/teaching/)
 - [Introduction to R for Python Users by Ramnath Vaidyanathan](https://ramnathv.github.io/pycon2014-r/)
