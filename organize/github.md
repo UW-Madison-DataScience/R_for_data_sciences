@@ -18,6 +18,7 @@ While GitHub can be used for any type of documents, the `RStudio` folks have mad
 - [Getting Started With Git (UCSC Genome Browser)](http://genomewiki.ucsc.edu/index.php/Getting_Started_With_Git)
 - [Good resources for learning git and github](https://help.github.com/articles/good-resources-for-learning-git-and-github/)
 - [Git for humans](https://speakerdeck.com/alicebartlett/git-for-humans)
+- [BFG Repo Cleaner](https://rtyley.github.io/bfg-repo-cleaner/)
 
 ## Github for Course Organization
  
@@ -56,7 +57,7 @@ git checkout master
 git pull
 git checkout branch
 git merge master
-``
+```
 
 - [Create new branch with git and manage branches](https://github.com/Kunena/Kunena-Forum/wiki/Create-a-new-branch-with-git-and-manage-branches) 
 - [Git Branching Basic Branching and Merging](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging)
