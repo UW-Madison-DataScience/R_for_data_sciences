@@ -2,6 +2,7 @@
 
 - [Data Repositories](repositories.md)
 
+- [R generation 25 (Significance)](http://blog.revolutionanalytics.com/2018/08/r-generation.html)
 - [R for Data Science by Garrett Grolemund and Hadley Wickham (ebook)](http://r4ds.had.co.nz/)
 - [Data wrangling, exploration, and analysis with R by Jenny Bryan (course)](http://stat545.com/)
 - [Data Carpentry: R for Ecologists (workshop)](http://www.datacarpentry.org/R-ecology-lesson/) | [Karl Broman version](http://kbroman.org/datacarpentry_R_2017-01-10/)
