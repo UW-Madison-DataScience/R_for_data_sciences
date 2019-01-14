@@ -2,7 +2,6 @@
 
 - [Data Repositories](repositories.md)
 
-- [JuliaCon 2018 | Keynote - The Rise of the Research Software Engineer | Mike Croucher](https://www.youtube.com/watch?reload=9&v=8ZSaAM8hhJ4) ([github slides](https://github.com/mikecroucher/juliacon2018))
 - [R generation 25 (Significance)](http://blog.revolutionanalytics.com/2018/08/r-generation.html)
 - [R for Data Science by Garrett Grolemund and Hadley Wickham (ebook)](http://r4ds.had.co.nz/)
 - [Data wrangling, exploration, and analysis with R by Jenny Bryan (course)](http://stat545.com/)

@@ -10,6 +10,8 @@ connect with other data science tools beyond R.
 
 References
 
+- [JuliaCon 2018 | Keynote - The Rise of the Research Software Engineer | Mike Croucher](https://www.youtube.com/watch?reload=9&v=8ZSaAM8hhJ4) ([github slides](https://github.com/mikecroucher/juliacon2018))
+
 - [Software Carpentry Unix Shell](http://swcarpentry.github.io/shell-novice/)
 - [Software Carpentry Automation with Make](http://swcarpentry.github.io/make-novice/)
 - [Jenny Bryan pipeline automation](http://stat545-ubc.github.io/automation00_index.html)
