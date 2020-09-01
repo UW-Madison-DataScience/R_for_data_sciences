@@ -53,4 +53,12 @@ Some models mix so-called fixed and random effects. Fixed are as above. Random e
 - [glmmnet package](https://cran.r-project.org/web/packages/glmnet/)
 - [Andrew Gelman](http://www.stat.columbia.edu/~gelman/)'s [arm package](http://www.stat.columbia.edu/~gelman/arm/software/) & [stan Platform](http://mc-stan.org/)
 - [Mixed Models in R: lme4, nlme, or both?](https://freshbiostats.wordpress.com/2013/07/28/mixed-models-in-r-lme4-nlme-both/)
+- [Statistics with R: Mixed Effects Models (Carpentries Style)](https://mq-software-carpentry.github.io/statistics-with-r/05-mixed-effects/index.html)
+- [Coding Club: Introduction to Linear Mixed Models](https://ourcodingclub.github.io/tutorials/mixed-models/)
+- [Coursera: Introduction to Mixed Effects Models](https://www.coursera.org/lecture/designexperiments/30-introduction-to-mixed-effects-models-4kVEo)
+- [R BGU Course: 8 Linear Mixed Models (JD Rosenblatt)](http://www.john-ros.com/Rcourse/lme.html)
+- [R Course: 6.1 Linear Mixed Models (P Piccinini)](https://pagepiccinini.com/r-course/lesson-6-part-1-linear-mixed-effects-models/)
+- [PhD Training Workshop: Statistics in R: 15 Linear Model and Mixed Methods (A Ushakova, M Valasek)](https://bookdown.org/animestina/R_Manchester/linear-model-and-mixed-methods.html)
+- [Generalized Linear Mixed-Effects Modeling in R (S Anderson)](https://github.com/seananderson/glmm-course)
+- [Statistical Modeling and Mixed Models with R (Singmann)](https://github.com/singmann/mixed_model_workshop)
 
