@@ -37,3 +37,4 @@
     Sanderson)](http://www.sr.bham.ac.uk/~ajrs/R/r-gallery.html)
 -   [William S Cleveland's *Visualizing Data*
     Book](http://www.stat.purdue.edu/~wsc/visualizing.html)
+-   [A Comprehensive Guide to the Grammar of Graphics for Effective Visualization of Multi-dimensional Data by Depanjan Sarkar](https://towardsdatascience.com/a-comprehensive-guide-to-the-grammar-of-graphics-for-effective-visualization-of-multi-dimensional-1f92b4ed4149)
